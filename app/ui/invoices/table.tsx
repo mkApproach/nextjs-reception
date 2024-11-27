@@ -58,13 +58,13 @@ export default async function InvoicesTable({
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  得意先・顧客
+                  氏　名
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Email
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  売上金額
+                  
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Date
@@ -99,7 +99,7 @@ export default async function InvoicesTable({
                     {invoice.email}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(invoice.amount)}
+                    {/*formatCurrency(invoice.amount)*/}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(invoice.date)}
