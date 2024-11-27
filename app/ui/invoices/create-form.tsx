@@ -25,7 +25,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               defaultValue=""
             >
               <option value="" disabled>
-                Select a customer
+                氏名の選択
               </option>
               {customers.map((customer) => (
                 <option key={customer.id} value={customer.id}>
@@ -105,7 +105,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">新規登録</Button>
       </div>
     </form>
   );
