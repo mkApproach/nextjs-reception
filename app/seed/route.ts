@@ -1,8 +1,8 @@
-// import bcrypt from 'bcrypt';
-// import { db } from '@vercel/postgres';
-// import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import bcrypt from 'bcrypt';
+import { db } from '@vercel/postgres';
+import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
-// const client = await db.connect();
+const client = await db.connect();
 
 // async function seedUsers() {
 //   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -29,31 +29,31 @@
 //   return insertedUsers;
 // }
 
-// async function seedInvoices() {
-//   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+ async function seedInvoices() {
+   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
-//   await client.sql`
-//     CREATE TABLE IF NOT EXISTS invoices (
-//       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-//       customer_id UUID NOT NULL,
-//       amount INT NOT NULL,
-//       status VARCHAR(255) NOT NULL,
-//       date DATE NOT NULL
-//     );
-//   `;
+   await client.sql`
+     CREATE TABLE IF NOT EXISTS invoices (
+       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+       customer_id UUID NOT NULL,
+       amount INT NOT NULL,
+       status VARCHAR(255) NOT NULL,
+       date DATE NOT NULL
+     );
+   `;
 
-//   const insertedInvoices = await Promise.all(
-//     invoices.map(
-//       (invoice) => client.sql`
-//         INSERT INTO invoices (customer_id, amount, status, date)
-//         VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
-//         ON CONFLICT (id) DO NOTHING;
-//       `,
-//     ),
-//   );
+   const insertedInvoices = await Promise.all(
+     invoices.map(
+       (invoice) => client.sql`
+         INSERT INTO invoices (customer_id, amount, status, date)
+         VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
+         ON CONFLICT (id) DO NOTHING;
+       `,
+     ),
+   );
 
-//   return insertedInvoices;
-// }
+   return insertedInvoices;
+ }
 
 // async function seedCustomers() {
 //   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -102,21 +102,21 @@
 // }
 
 export async function GET() {
-  return Response.json({
-    message:
-      'Uncomment this file and remove this line. You can delete this file when you are finished.',
-  });
-  // try {
-  //   await client.sql`BEGIN`;
+//  return Response.json({
+//    message:
+//      'Uncomment this file and remove this line. You can delete this file when you are finished.',
+//  });
+   try {
+     await client.sql`BEGIN`;
   //   await seedUsers();
   //   await seedCustomers();
-  //   await seedInvoices();
+     await seedInvoices();
   //   await seedRevenue();
-  //   await client.sql`COMMIT`;
+     await client.sql`COMMIT`;
 
-  //   return Response.json({ message: 'Database seeded successfully' });
-  // } catch (error) {
-  //   await client.sql`ROLLBACK`;
-  //   return Response.json({ error }, { status: 500 });
-  // }
+     return Response.json({ message: 'Database seeded successfully' });
+   } catch (error) {
+     await client.sql`ROLLBACK`;
+     return Response.json({ error }, { status: 500 });
+   }
 }
