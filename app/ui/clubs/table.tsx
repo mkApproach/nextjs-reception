@@ -14,7 +14,7 @@ export default async function ClubsTable({
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Clubs
+        クラブ（または個人）
       </h1>
       <Search placeholder="Search clubs..." />
       <div className="mt-6 flow-root">
