@@ -71,8 +71,8 @@ export async function createReception(prevState: State, formData: FormData) {
  
   // Revalidate the cache for the receptions page and redirect the user.
   console.log('error', error)
-  revalidatePath('/dashboard/receptions');
-  redirect('/dashboard/receptions');
+  revalidatePath('/dashboard');
+  redirect('/dashboard');
 }
 
 export async function updateReception(id: string, formData: FormData) {
@@ -94,8 +94,8 @@ export async function updateReception(id: string, formData: FormData) {
     return { message: 'Database Error: Failed to Update Reception.' };
   }
  
-  revalidatePath('/dashboard/receptions');
-  redirect('/dashboard/receptions');
+  revalidatePath('/dashboard');
+  redirect('/dashboard');
 }
 
 
@@ -103,7 +103,7 @@ export async function deleteReception(id: string) {
 //  throw new Error('Failed to Delete Reception');
   try {
     await sql`DELETE FROM receptions WHERE id = ${id}`;
-    revalidatePath('/dashboard/receptions');
+    revalidatePath('/dashboard');
     return { message: 'Deleted Reception.' };
   } catch (error) {
     console.log('error', error)
