@@ -10,105 +10,104 @@ import { error } from 'console';
  
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({
-    invalid_type_error: '顧客を選択してください。',
+  clubId: z.string({
+    invalid_type_error: 'クラブ（または個人）を選択してください。',
   }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: '0より大きい金額を入力してください。' }),
-  status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'pending または paid を選択してください。',
+  categoryId: z.string({
+    invalid_type_error: '種目を選択してください。',
   }),
+  name: z.string(),
+  age: z.string(),
   date: z.string(),
 });
 
 export type State = {
   errors?: {
-    customerId?: string[];
-    amount?: string[];
-    status?: string[];
+    clubId?: string[];
+    categoryId?: string[];
+    name?: string[];
+    age?: string[];
   };
   message?: string | null;
 };
  
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateReception = FormSchema.omit({ id: true, date: true });
+const UpdateReception = FormSchema.omit({ id: true, date: true });
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createReception(prevState: State, formData: FormData) {
   // Validate form using Zod
-  const validatedFields = CreateInvoice.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+  const validatedFields = CreateReception.safeParse({
+    clubId: formData.get('clubId'),
+    name: formData.get('name'),
+    age: formData.get('age'),
   });
  
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'Missing Fields. Failed to Create Reception.',
     };
   }
  
   // Prepare data for insertion into the database
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
+  const { clubId, categoryId, age } = validatedFields.data;
+//  const nameInCents = name * 100;
   const date = new Date().toISOString().split('T')[0];
  
   // Insert data into the database
   try {
     await sql`
-      INSERT INTO invoices (customer_id, amount, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      INSERT INTO receptions (club_id, catgory_id, name, age, date)
+      VALUES (${clubId}, ${categoryId}, ${age}, ${date})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     console.log('error', error)
     return {
-      message: 'Database Error: Failed to Create Invoice.',
+      message: 'Database Error: Failed to Create Reception.',
     };
   }
  
-  // Revalidate the cache for the invoices page and redirect the user.
+  // Revalidate the cache for the receptions page and redirect the user.
   console.log('error', error)
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/receptions');
+  redirect('/dashboard/receptions');
 }
 
-export async function updateInvoice(id: string, formData: FormData) {
-  const { customerId, amount, status } = UpdateInvoice.parse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+export async function updateReception(id: string, formData: FormData) {
+  const { clubId } = UpdateReception.parse({
+    clubId: formData.get('clubId'),
+    name: formData.get('name'),
+    age: formData.get('age'),
   });
  
-  const amountInCents = amount * 100;
+  const nameInCents = name;
  
   try {
     await sql`
-        UPDATE invoices
-        SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+        UPDATE receptions
         WHERE id = ${id}
       `;
   } catch (error) {
     console.log('error', error)
-    return { message: 'Database Error: Failed to Update Invoice.' };
+    return { message: 'Database Error: Failed to Update Reception.' };
   }
  
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/receptions');
+  redirect('/dashboard/receptions');
 }
 
 
-export async function deleteInvoice(id: string) {
-//  throw new Error('Failed to Delete Invoice');
+export async function deleteReception(id: string) {
+//  throw new Error('Failed to Delete Reception');
   try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
-    return { message: 'Deleted Invoice.' };
+    await sql`DELETE FROM receptions WHERE id = ${id}`;
+    revalidatePath('/dashboard/receptions');
+    return { message: 'Deleted Reception.' };
   } catch (error) {
     console.log('error', error)
-    return { message: 'Database Error: Failed to Delete Invoice.' };
+    return { message: 'Database Error: Failed to Delete Reception.' };
   }
 }
 

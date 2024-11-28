@@ -1,43 +1,52 @@
-import CardWrapper from '@/app/ui/dashboard/cards';
-import RevenueChart from '@/app/ui/dashboard/revenue-chart';
-import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import Pagination from '@/app/ui/receptions/pagination';
+import Search from '@/app/ui/search';
+import Table from '@/app/ui/receptions/table';
+import { CreateReception } from '@/app/ui/receptions/buttons';
 import { lusitana } from '@/app/ui/fonts';
-//import { fetchCardData } from '@/app/lib/data';
+import { ReceptionsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import {
-  RevenueChartSkeleton,
-  LatestInvoicesSkeleton,
-  CardsSkeleton,
-} from '@/app/ui/skeletons';
+import { fetchReceptionsPages } from '@/app/lib/data';
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Acme Dashboard',
+    default: 'Acme Dashboard',
+  },
+  description: 'The official Next.js Learn Dashboard built with App Router.',
+  metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
+};
 
-export default async function Page() {
-/*  const {
-    numberOfInvoices,
-    numberOfCustomers,
-    totalPaidInvoices,
-    totalPendingInvoices,
-  } = await fetchCardData(); // fetchLatestInvoices()の終了をまってから実行
-   */
-  
-  
-  return (
-    <main>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
-        Dashboard
-      </h1>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Suspense fallback={<CardsSkeleton />}>
-            <CardWrapper />
+export default async function Page(
+    props: {
+        searchParams?: Promise<{
+        query?: string;
+        page?: string;
+        }>;
+    }
+    
+    ) {
+    const searchParams = await props.searchParams;
+    const query = searchParams?.query || '';
+    const currentPage = Number(searchParams?.page) || 1;
+
+    const totalPages = await fetchReceptionsPages(query);
+
+    return (
+        <div className="w-full">
+          <div className="flex w-full items-center justify-between">
+            <h1 className={`${lusitana.className} text-2xl`}>受付一覧</h1>
+          </div>
+          <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+            <Search placeholder="受付の検索..." />
+            <CreateReception />
+          </div>
+          <Suspense key={query + currentPage} fallback={<ReceptionsTableSkeleton />}>
+            <Table query={query} currentPage={currentPage} />
           </Suspense>
+          <div className="mt-5 flex w-full justify-center">
+            <Pagination totalPages={totalPages} />
+          </div>
         </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <Suspense fallback={<RevenueChartSkeleton />}>
-        <RevenueChart />
-        </Suspense>
-        <Suspense fallback={<LatestInvoicesSkeleton />}>
-          <LatestInvoices />
-        </Suspense>
-      </div>
-    </main>
-  );
-}
+      );
+    }
