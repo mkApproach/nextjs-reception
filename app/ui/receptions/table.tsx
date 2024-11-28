@@ -29,9 +29,9 @@ export default async function ReceptionsTable({
                   <div>
                     <div className="mb-2 flex items-center">
 
-                      <p>{reception.name}</p>
+                      <p>{reception.club_name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{reception.email}</p>
+                    <p className="text-sm text-gray-500">{reception.category_name}</p>
                   </div>
                </div>
                 <div className="flex w-full items-center justify-between pt-4">
