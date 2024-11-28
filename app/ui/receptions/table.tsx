@@ -13,8 +13,6 @@ export default async function ReceptionsTable({
 }) {
   const receptions = await fetchFilteredReceptions(query, currentPage);
 
-  console.log('receptions', receptions)
-
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -39,7 +37,7 @@ export default async function ReceptionsTable({
                     <p className="text-xl font-medium">
                       { reception.name }
                     </p>
-                    <p>{formatDateToLocal(reception.date)}</p>
+                    <p className="text-sm text-gray-500">{formatDateToLocal(reception.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateReception id={reception.id} />
@@ -81,7 +79,7 @@ export default async function ReceptionsTable({
                   key={reception.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className="whitespace-nowrap py-3 pr-3">
+                  <td className="whitespace-nowrap w-48 py-3 pr-3">
                      
                       <p>{reception.club_name}</p>
             
@@ -92,7 +90,7 @@ export default async function ReceptionsTable({
                   <td className="whitespace-nowrap px-3 py-3">
                     { reception.name }
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap  w-48 px-3 py-3">
                     { reception.age }
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">

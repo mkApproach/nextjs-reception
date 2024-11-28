@@ -1,5 +1,5 @@
 export const formatCurrency = (name: number) => {
-  return (name / 100).toLocaleString('en-US', {
+  return (name / 100).toLocaleString('en-JP', {
     style: 'currency',
     currency: 'USD',
   });
@@ -7,12 +7,12 @@ export const formatCurrency = (name: number) => {
 
 export const formatDateToLocal = (
   dateStr: string,
-  locale: string = 'en-US',
+  locale: string = 'en-JP',
 ) => {
   const date = new Date(dateStr);
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',
-    month: 'short',
+    month: 'numeric',
     year: 'numeric',
   };
   const formatter = new Intl.DateTimeFormat(locale, options);
