@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   ClubField,
   ClubsTableType,
+  CategoryField,
   ReceptionForm,
   ReceptionsTable,
   LatestReceptionRaw,
@@ -135,7 +136,7 @@ export async function fetchClubs() {
 
 export async function fetchCategorys() {
   try {
-    const data = await sql<ClubField>`
+    const data = await sql<CategoryField>`
       SELECT
         id,
         category_name
@@ -143,8 +144,8 @@ export async function fetchCategorys() {
       ORDER BY category_name ASC
     `;
 
-    const clubs = data.rows;
-    return clubs;
+    const categorys = data.rows;
+    return categorys;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all categorys.');

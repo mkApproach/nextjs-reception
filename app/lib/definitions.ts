@@ -94,6 +94,12 @@ export type ClubField = {
   club_address: string;
 };
 
+export type CategoryField = {
+  id: string;
+  category_name: string;
+};
+
+
 
 export type ReceptionForm = {
   id: string;

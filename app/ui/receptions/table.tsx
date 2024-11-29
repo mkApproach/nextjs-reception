@@ -99,9 +99,7 @@ export default async function ReceptionsTable({
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(reception.date)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    { /*<ReceptionAge age={reception.age} />*/ }
-                  </td>
+
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       <UpdateReception id={reception.id} />

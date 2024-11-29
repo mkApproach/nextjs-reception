@@ -1,4 +1,4 @@
-import { ClubField } from '@/app/lib/definitions';
+import { ClubField, CategoryField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -8,14 +8,14 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 
-export default function Form({ clubs }: { clubs: ClubField[] }) {
+export default function Form({ clubs, categorys }: { clubs: ClubField[],  categorys: CategoryField[] }) {
   return (
     <form>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Club Name */}
+        {/* クラブ名（または個人） */}
         <div className="mb-4">
           <label htmlFor="club" className="mb-2 block text-sm font-medium">
-            Choose club
+          クラブ名（または個人）
           </label>
           <div className="relative">
             <select
@@ -30,6 +30,31 @@ export default function Form({ clubs }: { clubs: ClubField[] }) {
               {clubs.map((club) => (
                 <option key={club.id} value={club.id}>
                   {club.club_name}
+                </option>
+              ))}
+            </select>
+            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+          </div>
+        </div>
+
+        {/* 種目 */}
+        <div className="mb-4">
+          <label htmlFor="category" className="mb-2 block text-sm font-medium">
+          種目
+          </label>
+          <div className="relative">
+            <select
+              id="categorys"
+              name="categoryId"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Select a category
+              </option>
+              {categorys.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.category_name}
                 </option>
               ))}
             </select>
