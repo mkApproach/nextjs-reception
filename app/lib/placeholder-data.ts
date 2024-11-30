@@ -117,4 +117,4 @@ const receptions = [
 
 
 
-export { users, clubs, categorys, receptions };
+export { users, clubs, categorys, receptions, venues };
