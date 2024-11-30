@@ -30,6 +30,27 @@ const clubs = [
   },
 ];
 
+const venues = [
+  {
+    venue_name: '日高町卓球クラブ',
+    venue_postemail: 'evil@rabbit.com',
+    venue_address: '豊岡市日高町十戸',
+    venue_phonenumber: '0796-42-5151',
+  },
+  {
+     venue_name: '豊岡市卓球クラブ',
+    venue_postemail: 'delba@oliveira.com',
+    venue_address: '豊岡市',
+    venue_phonenumber: '0796-22-5151',
+  },
+  {
+    venue_name: '出石町卓球クラブ',
+    venue_postemail: 'lee@robinson.com',
+    venue_address: '豊岡市出石町',
+    venue_phonenumber: '0796-52-5151',
+  },
+];
+
 const categorys = [
   {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',

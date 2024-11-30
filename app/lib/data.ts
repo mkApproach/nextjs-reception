@@ -97,8 +97,10 @@ export async function fetchReceptionById(id: string) {
       SELECT
         receptions.id,
         receptions.club_id,
+        receptions.category_id,
         receptions.name,
-        receptions.age
+        receptions.age,
+        receptions.email
       FROM receptions
       WHERE receptions.id = ${id};
     `;

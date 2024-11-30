@@ -80,6 +80,29 @@ async function seedCategorys() {
   return insertedCategorys;
 }
 
+async function seedVenues() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS venues (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      venue_name VARCHAR(255) NOT NULL
+    );
+  `;
+
+  const insertedVenues = await Promise.all(
+    venues.map(
+      (venue) => client.sql`
+        INSERT INTO venues (id, venue_name)
+        VALUES (${venue.id}, ${venue.venue_name} )
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedVenues;
+}
+
 /*
 async function seedReceptions() {
    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;

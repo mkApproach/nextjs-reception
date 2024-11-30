@@ -13,6 +13,8 @@ export default async function ReceptionsTable({
 }) {
   const receptions = await fetchFilteredReceptions(query, currentPage);
 
+//  console.log('Table receptions', receptions)
+
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">

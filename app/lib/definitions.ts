@@ -11,10 +11,10 @@ export type User = {
 
 export type Venue = { // 会場
   id: string;
-  name: string;
-  postmail: string;
-  address: string;
-  phonenumber: string;
+  venue_name: string;
+  venue_postmail: string;
+  venue_address: string;
+  venue_phonenumber: string;
 };
 
 
@@ -34,6 +34,7 @@ export type Category = {  // 種目
   id: string;
   category_name: string;
 };
+
 
 export type Reception = {
   id: string;
@@ -103,7 +104,10 @@ export type CategoryField = {
 
 export type ReceptionForm = {
   id: string;
-  club_id: string;
   name: string;
-  age: 'pending' | 'paid';
+  age: string;
+  email: string;
+  club_id: string;
+  category_id: string;
+  date: string;
 };
