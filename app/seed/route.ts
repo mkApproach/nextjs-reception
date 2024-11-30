@@ -79,7 +79,7 @@ async function seedCategorys() {
 
   return insertedCategorys;
 }
-
+/*
 async function seedVenues() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -102,7 +102,7 @@ async function seedVenues() {
 
   return insertedVenues;
 }
-
+*/
 /*
 async function seedReceptions() {
    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
