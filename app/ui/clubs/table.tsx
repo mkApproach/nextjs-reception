@@ -38,13 +38,13 @@ export default async function ClubsTable({
                           Email:　 {club.club_email}
                         </p>
                         <p className="text-sm text-gray-500">
-                          住所:　{club.club_address}
+                          住 所:　{club.club_address}
                         </p>
                         <p className="text-sm text-gray-500">
-                          Tel:　{club.club_phonenumber}
+                          Tel:　　{club.club_phonenumber}
                         </p>
                         <p className="text-sm text-gray-500">
-                          Fax:　{club.club_faxnumber}
+                          Fax:　　{club.club_faxnumber}
                         </p>
                       </div>
                     </div>
