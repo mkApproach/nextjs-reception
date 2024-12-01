@@ -14,7 +14,7 @@ export function CreateReception() {
   );
 }
 
-export function UpdateReception({ id }: { id: string }) {
+export function UpdateReception({ id }: { id: number }) {
   return (
     <Link
       href={`/dashboard/${id}/edit`}
@@ -25,7 +25,7 @@ export function UpdateReception({ id }: { id: string }) {
   );
 }
 
-export function DeleteReception({ id }: { id: string }) {
+export function DeleteReception({ id }: { id: number }) {
   const deleteReceptionWithId = deleteReception.bind(null, id);
  
   return (

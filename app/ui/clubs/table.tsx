@@ -40,6 +40,12 @@ export default async function ClubsTable({
                         <p className="text-sm text-gray-500">
                           {club.club_address}
                         </p>
+                        <p className="text-sm text-gray-500">
+                          {club.club_phonenumber}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {club.club_faxnumber}
+                        </p>
                       </div>
                     </div>
  
@@ -47,7 +53,7 @@ export default async function ClubsTable({
                 ))}
               </div>
               <table className="hidden min-w-full rounded-md text-gray-900 md:table">
-                <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
+                <thead className="rounded-md bg-sky-100 text-left text-sm font-normal">
                   <tr>
                     <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                       クラブ名（または個人）
@@ -57,6 +63,12 @@ export default async function ClubsTable({
                     </th>                    
                     <th scope="col" className="px-3 py-5 font-medium">
                       住　所
+                    </th>
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      電話番号
+                    </th>                    
+                    <th scope="col" className="px-3 py-5 font-medium">
+                      Fax番号
                     </th>
                   </tr>
                 </thead>
@@ -76,10 +88,10 @@ export default async function ClubsTable({
                         {club.club_address}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
-                        {/*club.total_pending*/}
+                        {club.club_phonenumber}
                       </td>
                       <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
-                        {/*club.total_paid*/}
+                        {club.club_faxnumber}
                       </td>
                     </tr>
                   ))}

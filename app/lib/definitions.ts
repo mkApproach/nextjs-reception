@@ -10,51 +10,55 @@ export type User = {
 };
 
 export type Venue = { // 会場
-  id: string;
+  id: number;
   venue_name: string;
   venue_postmail: string;
   venue_address: string;
   venue_phonenumber: string;
+  venue_faxnumber: string;
 };
 
 
 export type Tournament = { // 大会
-  id: string;
-  name: string;
+  id: number;
+  tournament_name: string;
+  venue_id: number;
 };
 
 export type Club = {  // クラブ・個人
-  id: string;
+  id: number;
   club_name: string;
   club_email: string;
   club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
 };
 
 export type Category = {  // 種目
-  id: string;
+  id: number;
   category_name: string;
 };
 
 
 export type Reception = {
-  id: string;
+  id: number;
   name: string;
   age: string;
   email: string;
-  club_id: string;
-  category_id: string;
+  club_id: number;
+  category_id: number;
   date: string;
 };
 
 
 
 export type LatestReception = {
-  id: string;
+  id: number;
   name: string;
   age: string;
   email: string;
-  club_id: string;
-  category_id: string;
+  club_id: number;
+  category_id: number;
   date: string;
 };
 
@@ -64,7 +68,7 @@ export type LatestReceptionRaw = Omit<LatestReception, 'name'> & {
 };
 
 export type ReceptionsTable = {
-  id: string;
+  id: number;
   name: string;
   age: string;
   email: string;
@@ -75,39 +79,45 @@ export type ReceptionsTable = {
 
 
 export type ClubsTableType = {
-  id: string;
+  id: number;
   club_name: string;
   club_email: string;
   club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
 };
 
 export type FormattedClubsTable = {
-  id: string;
+  id: number;
   club_name: string;
   club_email: string;
   club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
 };
 
 export type ClubField = {
-  id: string;
+  id: number;
   club_name: string;
   club_email: string;
   club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
 };
 
 export type CategoryField = {
-  id: string;
+  id: number;
   category_name: string;
 };
 
 
 
 export type ReceptionForm = {
-  id: string;
+  id: number;
   name: string;
   age: string;
   email: string;
-  club_id: string;
-  category_id: string;
+  club_id: number;
+  category_id: number;
   date: string;
 };

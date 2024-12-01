@@ -125,7 +125,7 @@ export async function fetchClubs() {
         id,
         club_name
       FROM clubs
-      ORDER BY club_name ASC
+      ORDER BY id_name ASC
     `;
 
     const clubs = data.rows;
@@ -143,7 +143,7 @@ export async function fetchCategorys() {
         id,
         category_name
       FROM categorys
-      ORDER BY category_name ASC
+      ORDER BY id ASC
     `;
 
     const categorys = data.rows;
@@ -159,16 +159,18 @@ export async function fetchFilteredClubs(query: string) {
   try {
     const data = await sql<ClubsTableType>`
 		SELECT
-		  clubs.id,
-		  clubs.club_name,
-		  clubs.club_email,
-      clubs.club_address
+		  id,
+		  club_name,
+		  club_email,
+      club_address,
+      club_phonenumber,
+      club_faxnumber
 		FROM clubs
 		WHERE
-		  clubs.club_name ILIKE ${`%${query}%`} OR
-      clubs.club_email ILIKE ${`%${query}%`}
-		GROUP BY clubs.id, clubs.club_name, clubs.club_email, clubs.club_address
-		ORDER BY clubs.club_name ASC
+		  club_name ILIKE ${`%${query}%`} OR
+      club_email ILIKE ${`%${query}%`}
+		GROUP BY id, club_name, club_email, club_address
+		ORDER BY id ASC
 	  `;
 
     const clubs = data.rows.map((club) => ({

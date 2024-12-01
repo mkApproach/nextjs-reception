@@ -99,7 +99,7 @@ export async function updateReception(id: string, formData: FormData) {
 }
 
 
-export async function deleteReception(id: string) {
+export async function deleteReception(id: number) {
 //  throw new Error('Failed to Delete Reception');
   try {
     await sql`DELETE FROM receptions WHERE id = ${id}`;
