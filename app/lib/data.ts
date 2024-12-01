@@ -125,7 +125,7 @@ export async function fetchClubs() {
         id,
         club_name
       FROM clubs
-      ORDER BY id_name ASC
+      ORDER BY id ASC
     `;
 
     const clubs = data.rows;
