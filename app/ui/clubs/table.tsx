@@ -35,16 +35,16 @@ export default async function ClubsTable({
                           </div>
                         </div>
                         <p className="text-sm text-gray-500">
-                          Email {club.club_email}
+                          Email:　 {club.club_email}
                         </p>
                         <p className="text-sm text-gray-500">
-                          {club.club_address}
+                          住所:　{club.club_address}
                         </p>
                         <p className="text-sm text-gray-500">
-                          {club.club_phonenumber}
+                          Tel:　{club.club_phonenumber}
                         </p>
                         <p className="text-sm text-gray-500">
-                          {club.club_faxnumber}
+                          Fax:　{club.club_faxnumber}
                         </p>
                       </div>
                     </div>
