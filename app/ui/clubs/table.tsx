@@ -35,7 +35,7 @@ export default async function ClubsTable({
                           </div>
                         </div>
                         <p className="text-sm text-gray-500">
-                          {club.club_email}
+                          Email {club.club_email}
                         </p>
                         <p className="text-sm text-gray-500">
                           {club.club_address}
