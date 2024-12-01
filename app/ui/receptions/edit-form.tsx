@@ -22,7 +22,6 @@ export default function EditReceptionForm({
 }) {
   const updateReceptionWithId = updateReception.bind(null, reception.id);
 
-  console.log('reception', reception)
   return (
     <form action={updateReceptionWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -99,7 +98,7 @@ export default function EditReceptionForm({
 
         {/* Reception Age */}
         <div className="mb-4">
-          <label htmlFor="name" className="mb-2 block text-sm font-medium">
+          <label htmlFor="age" className="mb-2 block text-sm font-medium">
             年令（または学年）
           </label>
           <div className="relative mt-2 rounded-md">
@@ -120,7 +119,7 @@ export default function EditReceptionForm({
 
         {/* Reception Age */}
         <div className="mb-4">
-          <label htmlFor="name" className="mb-2 block text-sm font-medium">
+          <label htmlFor="email" className="mb-2 block text-sm font-medium">
             Email
           </label>
           <div className="relative mt-2 rounded-md">

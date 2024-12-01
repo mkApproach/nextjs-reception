@@ -99,10 +99,6 @@ export type FormattedClubsTable = {
 export type ClubField = {
   id: number;
   club_name: string;
-  club_email: string;
-  club_address: string;
-  club_phonenumber: string;
-  club_faxnumber: string;
 };
 
 export type CategoryField = {

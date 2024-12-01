@@ -16,6 +16,8 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createReception, initialState);
 
+  console.log('createReception', createReception)
+
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -77,6 +79,15 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
+
+          <div id="category-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.categoryId &&
+              state.errors.categoryId.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
         </div>
 
         {/* Reception Name */}
@@ -97,11 +108,20 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
               <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
+
+          <div id="amount-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.name &&
+              state.errors.name.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
         </div>
 
         {/* Reception Name */}
         <div className="mb-4">
-          <label htmlFor="name" className="mb-2 block text-sm font-medium">
+          <label htmlFor="age" className="mb-2 block text-sm font-medium">
             年令（または学年）
           </label>
           <div className="relative mt-2 rounded-md">
@@ -121,7 +141,7 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
 
         {/* Reception Name */}
         <div className="mb-4">
-          <label htmlFor="name" className="mb-2 block text-sm font-medium">
+          <label htmlFor="email" className="mb-2 block text-sm font-medium">
             Email
           </label>
           <div className="relative mt-2 rounded-md">
@@ -136,6 +156,14 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
               />
               <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+          </div>
+          <div id="email-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.email &&
+              state.errors.email.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
         </div>
 
