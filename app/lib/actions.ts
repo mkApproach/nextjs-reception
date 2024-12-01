@@ -75,7 +75,7 @@ export async function createReception(prevState: State, formData: FormData) {
   redirect('/dashboard');
 }
 
-export async function updateReception(id: string, formData: FormData) {
+export async function updateReception(id: number, formData: FormData) {
   const { clubId } = UpdateReception.parse({
     clubId: formData.get('clubId'),
     name: formData.get('name'),
