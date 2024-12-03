@@ -163,7 +163,7 @@ export type SignUpState = {
   };
   message?: string | null;
 };
-
+/*
 export async function signUp(prevState: SignUpState, formData: FormData): Promise<SignUpState> {
   const validatedFields = signUpSchema.safeParse({
     email: formData.get('email'),
@@ -188,19 +188,20 @@ export async function signUp(prevState: SignUpState, formData: FormData): Promis
         message: '既に登録されているユーザーです。',
       };
     }
-/*
+
     await prisma.user.create({
       data: {
         email: email,
         password: hashedPassword,
       },
-    });*/
+    });
   } catch (error) {
     throw error;
   }
 
   redirect('/login');
 }
+*/
 /*
 export async function login(prevState: string | undefined, formData: FormData) {
   try {
