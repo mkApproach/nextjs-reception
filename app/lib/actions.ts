@@ -201,7 +201,7 @@ export async function signUp(prevState: SignUpState, formData: FormData): Promis
 
   redirect('/login');
 }
-
+/*
 export async function login(prevState: string | undefined, formData: FormData) {
   try {
     await signIn('credentials', formData);
@@ -218,6 +218,7 @@ export async function login(prevState: string | undefined, formData: FormData) {
     throw error;
   }
 }
+  */
 
 export async function logout() {
   try {
