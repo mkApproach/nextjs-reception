@@ -2,10 +2,14 @@
 // https://nextjs.org/learn/dashboard-app/fetching-data
 const users = [
   {
-    id: '410544b2-4001-4271-9855-fec4b6a6442a',
-    name: 'User',
-    email: 'user@nextmail.com',
-    password: '123456',
+    name: '木内　盛雄',
+    email: 'kinai-ap@cameo.plalaor.jp',
+    password: 'Approach3533',
+  },
+  {
+    name: '石川　恵美',
+    email: 'emi-ap@cameo.plalaor.jp',
+    password: 'Approach3533',
   },
 ];
 
