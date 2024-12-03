@@ -4,9 +4,9 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 import { error } from 'console';
-
-
 
 // 正規表現を使用して、有効な文字だけを含む文字列を定義します。
 const pattern = /^[\u0021-\u007e]+$/u
@@ -127,7 +127,7 @@ export async function deleteReception(id: number) {
     return { message: 'Database Error: Failed to Delete Reception.' };
   }
 }
-/*
+
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
@@ -146,4 +146,3 @@ export async function authenticate(
     throw error;
   }
 }
-*/

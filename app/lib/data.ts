@@ -1,6 +1,5 @@
 import { sql } from '@vercel/postgres';
 import {
-  User,
   ClubField,
   ClubsTableType,
   CategoryField,
@@ -9,30 +8,6 @@ import {
   LatestReceptionRaw,
 } from './definitions';
 import { formatCurrency } from './utils';
-
-export async function fetchUserById(email: string) {
-  try {
-    const data = await sql<User>`
-      SELECT
-        users.id,
-        users.name,
-        users.email
-      WHERE receptions.id = ${email};
-    `;
-
-    const users = data.rows.map((user) => ({
-      ...user,
-      // Convert name from cents to dollars
-      name: user.name,
-    }));
-
-    return users[0];
-  } catch (error) {
-    console.error('Database Error:', error);
-    return null
-//    throw new Error('Failed to fetch reception.');
-  }
-}
 
 
 export async function fetchLatestReceptions() {
