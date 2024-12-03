@@ -1,10 +1,11 @@
 'use client';
 
-import { login } from '@/app/lib/actions';
+import { signUp } from '@/app/lib/actions';
 import { useActionState } from 'react';
 
-export default function LoginForm() {
-  const [errorMessage, dispatch] = useActionState(login, undefined);
+export default function SignUpForm() {
+  const initialState = { message: null, error: {} };
+  const [state, dispatch] = useActionState(signUp, initialState);
 
   return (
     <form action={dispatch} className='w-full'>
@@ -21,6 +22,12 @@ export default function LoginForm() {
             placeholder='メールアドレス'
             required
           />
+          {state.errors?.email &&
+            state.errors.email.map((error: string) => (
+              <div key={error} className='mt-2'>
+                <p className='text-red-500'>{error}</p>
+              </div>
+            ))}
         </div>
 
         <div className='mt-4'>
@@ -35,13 +42,19 @@ export default function LoginForm() {
             placeholder='パスワード'
             required
           />
+          {state.errors?.password &&
+            state.errors.password.map((error: string) => (
+              <div key={error} className='mt-2'>
+                <p className='text-red-500'>{error}</p>
+              </div>
+            ))}
         </div>
 
         <button className='mt-8 w-full rounded-lg bg-blue-500 text-white h-10 hover:bg-blue-400 focus-visible:outline-offset-2'>
-          ログイン
+          サインアップ
         </button>
         <div className='flex h-8 items-end space-x-1'>
-          {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+          {state.message ? <p className='text-red-500'>{state.message}</p> : null}
         </div>
       </div>
     </form>

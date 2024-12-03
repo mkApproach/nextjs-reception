@@ -1,12 +1,38 @@
 import { sql } from '@vercel/postgres';
 import {
+  User,
   ClubField,
   ClubsTableType,
+  CategoryField,
   ReceptionForm,
   ReceptionsTable,
   LatestReceptionRaw,
 } from './definitions';
 import { formatCurrency } from './utils';
+
+export async function fetchUserById(email: string) {
+  try {
+    const data = await sql<User>`
+      SELECT
+        users.id,
+        users.name,
+        users.email
+      WHERE receptions.id = ${email};
+    `;
+
+    const users = data.rows.map((user) => ({
+      ...user,
+      // Convert name from cents to dollars
+      name: user.name,
+    }));
+
+    return users[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    return null
+//    throw new Error('Failed to fetch reception.');
+  }
+}
 
 
 export async function fetchLatestReceptions() {
@@ -96,8 +122,10 @@ export async function fetchReceptionById(id: string) {
       SELECT
         receptions.id,
         receptions.club_id,
+        receptions.category_id,
         receptions.name,
-        receptions.age
+        receptions.age,
+        receptions.email
       FROM receptions
       WHERE receptions.id = ${id};
     `;
@@ -122,7 +150,7 @@ export async function fetchClubs() {
         id,
         club_name
       FROM clubs
-      ORDER BY club_name ASC
+      ORDER BY id ASC
     `;
 
     const clubs = data.rows;
@@ -135,16 +163,16 @@ export async function fetchClubs() {
 
 export async function fetchCategorys() {
   try {
-    const data = await sql<ClubField>`
+    const data = await sql<CategoryField>`
       SELECT
         id,
         category_name
       FROM categorys
-      ORDER BY category_name ASC
+      ORDER BY id ASC
     `;
 
-    const clubs = data.rows;
-    return clubs;
+    const categorys = data.rows;
+    return categorys;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all categorys.');
@@ -156,16 +184,18 @@ export async function fetchFilteredClubs(query: string) {
   try {
     const data = await sql<ClubsTableType>`
 		SELECT
-		  clubs.id,
-		  clubs.club_name,
-		  clubs.club_email,
-      clubs.club_address
+		  id,
+		  club_name,
+		  club_email,
+      club_address,
+      club_phonenumber,
+      club_faxnumber
 		FROM clubs
 		WHERE
-		  clubs.club_name ILIKE ${`%${query}%`} OR
-      clubs.club_email ILIKE ${`%${query}%`}
-		GROUP BY clubs.id, clubs.club_name, clubs.club_email, clubs.club_address
-		ORDER BY clubs.club_name ASC
+		  club_name ILIKE ${`%${query}%`} OR
+      club_email ILIKE ${`%${query}%`}
+		GROUP BY id, club_name, club_email, club_address
+		ORDER BY id ASC
 	  `;
 
     const clubs = data.rows.map((club) => ({

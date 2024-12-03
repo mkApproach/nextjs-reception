@@ -1,15 +1,16 @@
 import Form from '@/app/ui/receptions/create-form';
 import Breadcrumbs from '@/app/ui/receptions/breadcrumbs';
-import { fetchClubs } from '@/app/lib/data';
+import { fetchClubs, fetchCategorys } from '@/app/lib/data';
  
 export default async function Page() {
   const clubs = await fetchClubs();
- 
+  const categorys = await fetchCategorys();
+
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: '受付処理', href: '/dashboard' },
+          { label: '申し込み処理', href: '/dashboard' },
           {
             label: '受付　作成',
             href: '/dashboard/create',
@@ -17,7 +18,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form clubs={clubs} />
+      <Form clubs={clubs} categorys={categorys} />
     </main>
   );
 }
