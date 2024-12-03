@@ -129,7 +129,7 @@ export async function deleteReception(id: number) {
     return { message: 'Database Error: Failed to Delete Reception.' };
   }
 }
-
+/*
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
@@ -148,7 +148,7 @@ export async function authenticate(
     throw error;
   }
 }
-
+*/
 
 // 以下、ログイン関係
 
@@ -203,10 +203,6 @@ export async function signUp(prevState: SignUpState, formData: FormData): Promis
 }
 
 export async function login(prevState: string | undefined, formData: FormData) {
-
-  console.log('FormData', FormData)
-
-
   try {
     await signIn('credentials', formData);
   } catch (error) {
@@ -215,7 +211,7 @@ export async function login(prevState: string | undefined, formData: FormData) {
         case 'CredentialsSignin':
           return 'Invalid credentials.';
         default:
-          return 'Something went wrong.ですよ';
+          return 'Something went wrong.';
       }
     }
 
