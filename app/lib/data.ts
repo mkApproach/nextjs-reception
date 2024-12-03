@@ -2,7 +2,6 @@ import { sql } from '@vercel/postgres';
 import {
   ClubField,
   ClubsTableType,
-  CategoryField,
   ReceptionForm,
   ReceptionsTable,
   LatestReceptionRaw,
@@ -13,7 +12,7 @@ import { formatCurrency } from './utils';
 export async function fetchLatestReceptions() {
   try {
     const data = await sql<LatestReceptionRaw>`
-      SELECT receptions.name,receptions.age, clubs.club_name, categorys.category_name, receptions.id
+      SELECT receptions.name,receptions.age, clubs.name, categorys.name, receptions.id
       FROM receptions
       JOIN clubs ON receptions.club_id = clubs.id
       JOIN categorys ON receptions.category_id = categorys.id
@@ -47,14 +46,14 @@ export async function fetchFilteredReceptions(
         receptions.age,
         receptions.email,
         receptions.date,
-        clubs.club_name,
-        categorys.category_name
+        clubs.name,
+        categorys.name
       FROM receptions
       JOIN clubs ON receptions.club_id = clubs.id
       JOIN categorys ON receptions.category_id = categorys.id
       WHERE
-        clubs.club_name ILIKE ${`%${query}%`} OR
-        categorys.category_name ILIKE ${`%${query}%`} OR
+        clubs.name ILIKE ${`%${query}%`} OR
+        categorys.name ILIKE ${`%${query}%`} OR
         receptions.name::text ILIKE ${`%${query}%`} OR
         receptions.date::text ILIKE ${`%${query}%`} OR
         receptions.age ILIKE ${`%${query}%`}
@@ -76,8 +75,8 @@ export async function fetchReceptionsPages(query: string) {
     JOIN clubs ON receptions.club_id = clubs.id
     JOIN categorys ON receptions.category_id = categorys.id
     WHERE
-      clubs.club_name ILIKE ${`%${query}%`} OR
-      categorys.category_name ILIKE ${`%${query}%`} OR
+      clubs.name ILIKE ${`%${query}%`} OR
+      categorys.name ILIKE ${`%${query}%`} OR
       receptions.name::text ILIKE ${`%${query}%`} OR
       receptions.date::text ILIKE ${`%${query}%`} OR
       receptions.age ILIKE ${`%${query}%`}
@@ -97,10 +96,8 @@ export async function fetchReceptionById(id: string) {
       SELECT
         receptions.id,
         receptions.club_id,
-        receptions.category_id,
         receptions.name,
-        receptions.age,
-        receptions.email
+        receptions.age
       FROM receptions
       WHERE receptions.id = ${id};
     `;
@@ -123,9 +120,9 @@ export async function fetchClubs() {
     const data = await sql<ClubField>`
       SELECT
         id,
-        club_name
+        name
       FROM clubs
-      ORDER BY id ASC
+      ORDER BY name ASC
     `;
 
     const clubs = data.rows;
@@ -138,16 +135,16 @@ export async function fetchClubs() {
 
 export async function fetchCategorys() {
   try {
-    const data = await sql<CategoryField>`
+    const data = await sql<ClubField>`
       SELECT
         id,
-        category_name
+        name
       FROM categorys
-      ORDER BY id ASC
+      ORDER BY name ASC
     `;
 
-    const categorys = data.rows;
-    return categorys;
+    const clubs = data.rows;
+    return clubs;
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch all categorys.');
@@ -159,22 +156,21 @@ export async function fetchFilteredClubs(query: string) {
   try {
     const data = await sql<ClubsTableType>`
 		SELECT
-		  id,
-		  club_name,
-		  club_email,
-      club_address,
-      club_phonenumber,
-      club_faxnumber
+		  clubs.id,
+		  clubs.name,
+		  clubs.email
 		FROM clubs
 		WHERE
-		  club_name ILIKE ${`%${query}%`} OR
-      club_email ILIKE ${`%${query}%`}
-		GROUP BY id, club_name, club_email, club_address
-		ORDER BY id ASC
+		  clubs.name ILIKE ${`%${query}%`} OR
+      clubs.email ILIKE ${`%${query}%`}
+		GROUP BY clubs.id, clubs.name, clubs.email
+		ORDER BY clubs.name ASC
 	  `;
 
     const clubs = data.rows.map((club) => ({
       ...club,
+      total_pending: formatCurrency(club.total_pending),
+      total_paid: formatCurrency(club.total_paid),
     }));
 
     return clubs;

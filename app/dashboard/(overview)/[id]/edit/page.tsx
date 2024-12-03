@@ -1,15 +1,14 @@
 import Form from '@/app/ui/receptions/edit-form';
 import Breadcrumbs from '@/app/ui/receptions/breadcrumbs';
-import { fetchReceptionById, fetchClubs, fetchCategorys } from '@/app/lib/data';
+import { fetchReceptionById, fetchClubs } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
 export default async function Page(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const id = params.id;
-    const [reception, clubs, categorys] = await Promise.all([
+    const [reception, clubs] = await Promise.all([
       fetchReceptionById(id),
       fetchClubs(),
-      fetchCategorys(),
     ]);
 
     if (!reception) {
@@ -29,7 +28,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           },
         ]}
       />
-      <Form reception={reception} clubs={clubs} categorys={categorys} />
+      <Form reception={reception} clubs={clubs} />
     </main>
   );
 }

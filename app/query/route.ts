@@ -4,7 +4,7 @@ const client = await db.connect();
 
 async function listReceptions() {
  	const data = await client.sql`
-     SELECT receptions.name, clubs.club_name
+     SELECT receptions.name, clubs.name
      FROM receptions
      JOIN clubs ON receptions.club_id = clubs.id
      WHERE receptions.name = 666;
@@ -21,6 +21,6 @@ export async function GET() {
    try {
    	return Response.json(await listReceptions());
    } catch (error) {
-   	return Response.json({ error }, { status: 500 });
+   	return Response.json({ error }, { age: 500 });
    }
 }

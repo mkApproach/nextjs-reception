@@ -3,62 +3,57 @@
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
 };
 
 export type Venue = { // 会場
-  id: number;
-  venue_name: string;
-  venue_postmail: string;
-  venue_address: string;
-  venue_phonenumber: string;
-  venue_faxnumber: string;
+  id: string;
+  name: string;
+  postmail: string;
+  address: string;
+  phonenumber: string;
 };
 
 
 export type Tournament = { // 大会
-  id: number;
-  tournament_name: string;
-  venue_id: number;
+  id: string;
+  name: string;
 };
 
 export type Club = {  // クラブ・個人
-  id: number;
-  club_name: string;
-  club_email: string;
-  club_address: string;
-  club_phonenumber: string;
-  club_faxnumber: string;
+  id: string;
+  name: string;
+  email: string;
+  password: string;
 };
 
 export type Category = {  // 種目
-  id: number;
-  category_name: string;
+  id: string;
+  name: string;
 };
 
-
 export type Reception = {
-  id: number;
+  id: string;
   name: string;
   age: string;
   email: string;
-  club_id: number;
-  category_id: number;
+  club_id: string;
+  category_id: string;
   date: string;
 };
 
 
 
 export type LatestReception = {
-  id: number;
+  id: string;
   name: string;
   age: string;
   email: string;
-  club_id: number;
-  category_id: number;
+  club_id: string;
+  category_id: string;
   date: string;
 };
 
@@ -68,52 +63,36 @@ export type LatestReceptionRaw = Omit<LatestReception, 'name'> & {
 };
 
 export type ReceptionsTable = {
-  id: number;
+  id: string;
   name: string;
   age: string;
   email: string;
+  club_id: string;
+  category_id: string;
   date: string;
-  club_name: string;
-  category_name: string;
 };
 
-
 export type ClubsTableType = {
-  id: number;
-  club_name: string;
-  club_email: string;
-  club_address: string;
-  club_phonenumber: string;
-  club_faxnumber: string;
+  id: string;
+  name: string;
+  email: string;
 };
 
 export type FormattedClubsTable = {
-  id: number;
-  club_name: string;
-  club_email: string;
-  club_address: string;
-  club_phonenumber: string;
-  club_faxnumber: string;
+  id: string;
+  name: string;
+  email: string;
 };
 
 export type ClubField = {
-  id: number;
-  club_name: string;
+  id: string;
+  name: string;
+  email: string;
 };
-
-export type CategoryField = {
-  id: number;
-  category_name: string;
-};
-
-
 
 export type ReceptionForm = {
-  id: number;
+  id: string;
+  club_id: string;
   name: string;
-  age: string;
-  email: string;
-  club_id: number;
-  category_id: number;
-  date: string;
+  age: 'pending' | 'paid';
 };
