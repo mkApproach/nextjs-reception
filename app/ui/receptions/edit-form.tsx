@@ -1,6 +1,6 @@
 'use client';
 
-import { ClubField, ReceptionForm } from '@/app/lib/definitions';
+import { ClubField, CategoryField,  ReceptionForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -14,11 +14,14 @@ import { updateReception } from '@/app/lib/actions';
 export default function EditReceptionForm({
   reception,
   clubs,
+  categorys,
 }: {
   reception: ReceptionForm;
   clubs: ClubField[];
+  categorys: CategoryField[];
 }) {
   const updateReceptionWithId = updateReception.bind(null, reception.id);
+
   return (
     <form action={updateReceptionWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -35,11 +38,36 @@ export default function EditReceptionForm({
               defaultValue={reception.club_id}
             >
               <option value="" disabled>
-                Select a club
+              --- 選択して下さい ---
               </option>
               {clubs.map((club) => (
                 <option key={club.id} value={club.id}>
-                  {club.name}
+                  {club.club_name}
+                </option>
+              ))}
+            </select>
+            <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+          </div>
+        </div>
+
+        {/* Category Name */}
+        <div className="mb-4">
+          <label htmlFor="category" className="mb-2 block text-sm font-medium">
+            種　目
+          </label>
+          <div className="relative">
+            <select
+              id="category"
+              name="categoryId"
+              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              defaultValue={reception.category_id}
+            >
+              <option value="" disabled>
+              --- 選択して下さい ---
+              </option>
+              {categorys.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.category_name}
                 </option>
               ))}
             </select>
@@ -50,70 +78,71 @@ export default function EditReceptionForm({
         {/* Reception Name */}
         <div className="mb-4">
           <label htmlFor="name" className="mb-2 block text-sm font-medium">
-            売上金額
+            氏　名
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
                 id="name"
                 name="name"
-                type="number"
+                type="text"
                 step="0.01"
                 defaultValue={reception.name}
-                placeholder="Enter USD name"
+                placeholder="選手の名前を入力して下さい"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
-              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
         </div>
 
         {/* Reception Age */}
-        <fieldset>
-          <legend className="mb-2 block text-sm font-medium">
-            Set the reception age
-          </legend>
-          <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-            <div className="flex gap-4">
-              <div className="flex items-center">
-                <input
-                  id="pending"
-                  name="age"
-                  type="radio"
-                  value="pending"
-                  defaultChecked={reception.age === 'pending'}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="pending"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  未決済 <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="paid"
-                  name="age"
-                  type="radio"
-                  value="paid"
-                  defaultChecked={reception.age === 'paid'}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="paid"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  決済済 <CheckIcon className="h-4 w-4" />
-                </label>
-              </div>
+        <div className="mb-4">
+          <label htmlFor="age" className="mb-2 block text-sm font-medium">
+            年令（または学年）
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="age"
+                name="age"
+                type="text"
+                step="0.01"
+                defaultValue={reception.age}
+                placeholder="選手の年令（または学年）を入力して下さい"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
-        </fieldset>
+        </div>
+
+        {/* Reception Age */}
+        <div className="mb-4">
+          <label htmlFor="email" className="mb-2 block text-sm font-medium">
+            Email
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="email"
+                name="email"
+                type="text"
+                step="0.01"
+                defaultValue={reception.email}
+                placeholder="メールアドレスを入力して下さい"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+ 
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/receptions"
+          href="/dashboard"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel

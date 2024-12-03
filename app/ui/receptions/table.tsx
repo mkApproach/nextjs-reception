@@ -13,7 +13,7 @@ export default async function ReceptionsTable({
 }) {
   const receptions = await fetchFilteredReceptions(query, currentPage);
 
-  console.log('receptions', receptions)
+//  console.log('Table receptions', receptions)
 
   return (
     <div className="mt-6 flow-root">
@@ -29,9 +29,9 @@ export default async function ReceptionsTable({
                   <div>
                     <div className="mb-2 flex items-center">
 
-                      <p>{reception.name}</p>
+                      <p>{reception.club_name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{reception.email}</p>
+                    <p className="text-sm text-gray-500">{reception.category_name}</p>
                   </div>
                </div>
                 <div className="flex w-full items-center justify-between pt-4">
@@ -39,7 +39,7 @@ export default async function ReceptionsTable({
                     <p className="text-xl font-medium">
                       { reception.name }
                     </p>
-                    <p>{formatDateToLocal(reception.date)}</p>
+                    <p className="text-sm text-gray-500">{formatDateToLocal(reception.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateReception id={reception.id} />
@@ -49,7 +49,7 @@ export default async function ReceptionsTable({
               </div>
             ))}
           </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
+          <table className="hidden min-w-full bg-sky-100 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-3 py-5 font-medium sm:pl-6">
@@ -68,7 +68,7 @@ export default async function ReceptionsTable({
                   Email
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                    申込日
+                    申込日（更新日）
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -81,23 +81,27 @@ export default async function ReceptionsTable({
                   key={reception.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className="whitespace-nowrap py-3 pr-3">
+                  <td className="whitespace-nowrap w-48 py-3 pr-3">
                      
-                      <p>{reception.name}</p>
+                      <p>{reception.club_name}</p>
             
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {reception.email}
+                    {reception.category_name}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     { reception.name }
                   </td>
+                  <td className="whitespace-nowrap  w-48 px-3 py-3">
+                    { reception.age }
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    { reception.email }
+                  </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatDateToLocal(reception.date)}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    { /*<ReceptionAge age={reception.age} />*/ }
-                  </td>
+
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
                       <UpdateReception id={reception.id} />

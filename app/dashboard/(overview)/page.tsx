@@ -39,10 +39,10 @@ export default async function Page(
           </div>
           <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
             <Search placeholder="受付の検索..." />
-            <CreateReception />
+            <CreateReception />  { /* 新規受付処理 */ }
           </div>
           <Suspense key={query + currentPage} fallback={<ReceptionsTableSkeleton />}>
-            <Table query={query} currentPage={currentPage} />
+            <Table query={query} currentPage={currentPage} />  { /* 受付の一覧表示（更新・削除）*/}
           </Suspense>
           <div className="mt-5 flex w-full justify-center">
             <Pagination totalPages={totalPages} />
