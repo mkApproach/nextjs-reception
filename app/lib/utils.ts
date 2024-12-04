@@ -1,5 +1,5 @@
 export const formatCurrency = (name: number) => {
-  return (name / 100).toLocaleString('en-US', {
+  return (name / 100).toLocaleString('en-JP', {
     style: 'currency',
     currency: 'USD',
   });
@@ -7,16 +7,31 @@ export const formatCurrency = (name: number) => {
 
 export const formatDateToLocal = (
   dateStr: string,
-  locale: string = 'en-US',
+  locale: string = 'en-JP',
 ) => {
-  const date = new Date(dateStr);
+ 
+  const tergetdate = new Date(dateStr);
+
+  const year = tergetdate.getFullYear();
+  const month = tergetdate.getMonth() + 1;
+  const date = tergetdate.getDate();
+  const day = tergetdate.getDay();
+  const week = ["日", "月", "火", "水", "木", "金", "土"][day];
+
+  console.log(tergetdate)
+
+  return `${year}年${month}月${date}日  (${week})`
+
+  /*
+  console.log(date)
   const options: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
+   year: 'numeric',
+   month: 'numeric',
+   day: 'numeric',
+ 
   };
   const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);
+  return formatter.format(date);*/
 };
 
 
