@@ -3,86 +3,117 @@
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type User = {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password: string;
 };
 
-export type Customer = {
-  id: string;
-  name: string;
-  email: string;
-  image_url: string;
+export type Venue = { // 会場
+  id: number;
+  venue_name: string;
+  venue_postmail: string;
+  venue_address: string;
+  venue_phonenumber: string;
+  venue_faxnumber: string;
 };
 
-export type Invoice = {
-  id: string;
-  customer_id: string;
-  amount: number;
+
+export type Tournament = { // 大会
+  id: number;
+  tournament_name: string;
+  venue_id: number;
+};
+
+export type Club = {  // クラブ・個人
+  id: number;
+  club_name: string;
+  club_email: string;
+  club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
+};
+
+export type Category = {  // 種目
+  id: number;
+  category_name: string;
+};
+
+
+export type Reception = {
+  id: number;
+  name: string;
+  age: string;
+  email: string;
+  club_id: number;
+  category_id: number;
   date: string;
-  // In TypeScript, this is called a string union type.
-  // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
-  status: 'pending' | 'paid';
 };
 
-export type Revenue = {
-  month: string;
-  revenue: number;
-};
 
-export type LatestInvoice = {
-  id: string;
+
+export type LatestReception = {
+  id: number;
   name: string;
-  image_url: string;
+  age: string;
   email: string;
-  amount: string;
-};
-
-// The database returns a number for amount, but we later format it to a string with the formatCurrency function
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
-  amount: number;
-};
-
-export type InvoicesTable = {
-  id: string;
-  customer_id: string;
-  name: string;
-  email: string;
-  image_url: string;
+  club_id: number;
+  category_id: number;
   date: string;
-  amount: number;
-  status: 'pending' | 'paid';
 };
 
-export type CustomersTableType = {
-  id: string;
+// The database returns a number for name, but we later format it to a string with the formatCurrency function
+export type LatestReceptionRaw = Omit<LatestReception, 'name'> & {
+  name: number;
+};
+
+export type ReceptionsTable = {
+  id: number;
   name: string;
+  age: string;
   email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: number;
-  total_paid: number;
+  date: string;
+  club_name: string;
+  category_name: string;
 };
 
-export type FormattedCustomersTable = {
-  id: string;
+
+export type ClubsTableType = {
+  id: number;
+  club_name: string;
+  club_email: string;
+  club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
+};
+
+export type FormattedClubsTable = {
+  id: number;
+  club_name: string;
+  club_email: string;
+  club_address: string;
+  club_phonenumber: string;
+  club_faxnumber: string;
+};
+
+export type ClubField = {
+  id: number;
+  club_name: string;
+};
+
+export type CategoryField = {
+  id: number;
+  category_name: string;
+};
+
+
+
+export type ReceptionForm = {
+  id: number;
   name: string;
+  age: string;
   email: string;
-  image_url: string;
-  total_invoices: number;
-  total_pending: string;
-  total_paid: string;
-};
-
-export type CustomerField = {
-  id: string;
-  name: string;
-};
-
-export type InvoiceForm = {
-  id: string;
-  customer_id: string;
-  amount: number;
-  status: 'pending' | 'paid';
+  club_id: number;
+  category_id: number;
+  date: string;
 };

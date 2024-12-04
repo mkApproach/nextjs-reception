@@ -12,10 +12,10 @@ import { Button } from '@/app/ui/button';
 
 export default function EditInvoiceForm({
   invoice,
-  customers,
+  clubs,
 }: {
   invoice: InvoiceForm;
-  customers: CustomerField[];
+  clubs: CustomerField[];
 }) {
   return (
     <form>
@@ -35,7 +35,7 @@ export default function EditInvoiceForm({
               <option value="" disabled>
                 Select a customer
               </option>
-              {customers.map((customer) => (
+              {clubs.map((customer) => (
                 <option key={customer.id} value={customer.id}>
                   {customer.name}
                 </option>
@@ -111,7 +111,7 @@ export default function EditInvoiceForm({
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/invoices"
+          href="/dashboard"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel

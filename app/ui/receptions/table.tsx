@@ -1,76 +1,74 @@
 import Image from 'next/image';
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/reception/buttons';
-import InvoiceStatus from '@/app/ui/reception/status';
+import { UpdateReception, DeleteReception } from '@/app/ui/receptions/buttons';
+//import ReceptionAge from '@/app/ui/receptions/age';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredReception } from '@/app/lib/data';
+import { fetchFilteredReceptions } from '@/app/lib/data';
 
-export default async function ReceptionTable({
+export default async function ReceptionsTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const reception = await fetchFilteredReception(query, currentPage);
+  const receptions = await fetchFilteredReceptions(query, currentPage);
+
+//  console.log('Table receptions', receptions)
 
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
           <div className="md:hidden">
-            {reception?.map((invoice) => (
+            {receptions?.map((reception) => (
               <div
-                key={invoice.id}
+                key={reception.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <Image
-                        src={invoice.image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${invoice.name}'s profile picture`}
-                      />
-                      <p>{invoice.name}</p>
+
+                      <p>{reception.club_name}</p>
                     </div>
-                    <p className="text-sm text-gray-500">{invoice.email}</p>
+                    <p className="text-sm text-gray-500">{reception.category_name}</p>
                   </div>
-                  <InvoiceStatus status={invoice.status} />
-                </div>
+               </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(invoice.amount)}
+                      { reception.name }
                     </p>
-                    <p>{formatDateToLocal(invoice.date)}</p>
+                    <p className="text-sm text-gray-500">{formatDateToLocal(reception.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={invoice.id} />
-                    <DeleteInvoice id={invoice.id} />
+                    <UpdateReception id={reception.id} />
+                    <DeleteReception id={reception.id} />
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
+          <table className="hidden min-w-full bg-sky-100 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
+                <th scope="col" className="px-3 py-5 font-medium sm:pl-6">
+                  クラブ名（または個人）
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium sm:pl-6">
+                  種目
+                </th>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                  Customer
+                  氏　名
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium sm:pl-6">
+                  年令（または学年）
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Email
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Amount
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Date
-                </th>
-                <th scope="col" className="px-3 py-5 font-medium">
-                  Status
+                    申込日（更新日）
                 </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
@@ -78,39 +76,36 @@ export default async function ReceptionTable({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {reception?.map((invoice) => (
+              {receptions?.map((reception) => (
                 <tr
-                  key={invoice.id}
+                  key={reception.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <Image
-                        src={invoice.image_url}
-                        className="rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${invoice.name}'s profile picture`}
-                      />
-                      <p>{invoice.name}</p>
-                    </div>
+                  <td className="whitespace-nowrap w-48 py-3 pr-3">
+                     
+                      <p>{reception.club_name}</p>
+            
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {invoice.email}
+                    {reception.category_name}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(invoice.amount)}
+                    { reception.name }
+                  </td>
+                  <td className="whitespace-nowrap  w-48 px-3 py-3">
+                    { reception.age }
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(invoice.date)}
+                    { reception.email }
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    <InvoiceStatus status={invoice.status} />
+                    {formatDateToLocal(reception.date)}
                   </td>
+
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={invoice.id} />
-                      <DeleteInvoice id={invoice.id} />
+                      <UpdateReception id={reception.id} />
+                      <DeleteReception id={reception.id} />
                     </div>
                   </td>
                 </tr>
