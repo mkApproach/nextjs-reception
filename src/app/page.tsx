@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
 import styles from '@/app/ui/home.module.css';
 import Image from 'next/image';
-import hero_desktop from '../public/hero-desktop.png'
+import hero_desktop from '../../public/hero-desktop.png'
 
 export default function Page() {
   return (
