@@ -6,6 +6,9 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { error } from 'console';
 
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
+
 // 正規表現を使用して、有効な文字だけを含む文字列を定義します。
 const pattern = /^[\u0021-\u007e]+$/u
  
@@ -123,5 +126,24 @@ export async function createReception(prevState: State, formData: FormData) {
     } catch (error) {
       console.log('error', error)
       return { message: 'Database Error: Failed to Delete Reception.' };
+    }
+  }
+
+  export async function authenticate(
+    prevState: string | undefined,
+    formData: FormData,
+  ) {
+    try {
+      await signIn('credentials', formData);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        switch (error.type) {
+          case 'CredentialsSignin':
+            return 'Invalid credentials.';
+          default:
+            return 'Something went wrong.';
+        }
+      }
+      throw error;
     }
   }
