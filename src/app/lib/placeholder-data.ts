@@ -3,9 +3,15 @@
 const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
-    name: 'User',
-    email: 'user@nextmail.com',
-    password: '123456',
+    name: '木内　盛雄',
+    email: 'kinai-ap@cameo.plala.or.jp',
+    password: 'Approach3533',
+  },
+  {
+    id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
+    name: '晴山　紋音',
+    email: 'ayane-ap@cameo.plala.or.jp',
+    password: 'Approach3533',
   },
 ];
 

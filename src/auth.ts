@@ -35,8 +35,7 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
           console.log('userですよ', user)
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
-          const userone = { id: "1", name: user.name, email: user.email, password: user.password }
-          if (passwordsMatch) return userone;
+          if (passwordsMatch) return user;
         }
  
         console.log('Invalid credentials');
@@ -44,5 +43,21 @@ export const { handlers: { GET, POST }, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    // メモ：この書き方は、next-auth: 5.0.0-beta.5 では型エラーが解決できず、next-auth: 5.0.0-beta.8 では通りました。えええ…
+    async session({ session, token }) {
+//      console.log('session確認')
+      if (session.user != null && token.id != null) {
+        session.user.id = token.id as string; // token.id は型 unknown でエラーが出るので as で型宣言。すぐ下で渡しているのに…
+      }
+      return session
+    },
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+  },
   secret: process.env.AUTH_SECRET, 
 });
