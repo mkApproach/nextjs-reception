@@ -5,9 +5,11 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { error } from 'console';
+import { User, } from './definitions';
 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import bcrypt from 'bcrypt';
 
 // 正規表現を使用して、有効な文字だけを含む文字列を定義します。
 const pattern = /^[\u0021-\u007e]+$/u
@@ -31,6 +33,18 @@ const FormSchema = z.object({
   date: z.string(),
 });
 
+const FormUser = z.object({
+  id: z.string(),
+  name: z.string()
+  .max(255, '255文字以下で入力してください。' )
+  .min(1, '必須です'),
+  email: z
+  .string()
+  .email('正しいメールアドレスを入力してください。') // メールアドレス形式のバリデーション
+  .regex(pattern), // 追加の正規表現によるバリデーション
+  password: z.string(),
+});
+
 export type State = {
   errors?: {
     clubId?: string[];
@@ -44,6 +58,7 @@ export type State = {
  
 const CreateReception = FormSchema.omit({ id: true, date: true });
 const UpdateReception = FormSchema.omit({ id: true, date: true });
+const CreateUser = FormUser.omit({ id: true });
 
 export async function createReception(prevState: State, formData: FormData) {
     // Validate form using Zod
@@ -146,4 +161,52 @@ export async function createReception(prevState: State, formData: FormData) {
       }
       throw error;
     }
+  }
+
+  export async function userRegistration(
+    prevState: string | undefined,
+    formData: FormData,
+  ) {
+        // Validate form using Zod
+    const validatedFields = CreateUser.safeParse({
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    });
+   
+    // If form validation fails, return errors early. Otherwise, continue.
+    if (!validatedFields.success) {
+      return 'Missing Fields. Failed to Create Reception.'
+    }
+       
+    // Prepare data for insertion into the database
+    const { name, email, password } = validatedFields.data;
+
+    try {
+      const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
+
+      if (user.rows[0]) {
+        return 'すでに、登録済です.';
+      } else {
+        // ここからユーザー登録処理
+        try {
+          const hashedPassword = await bcrypt.hash(password, 10);
+          await sql`
+            INSERT INTO users (name, email, password)
+            VALUES (${name}, ${email}, ${hashedPassword})
+          `;
+        } catch (error) {
+          // If a database error occurs, return a more specific error.
+          console.log('error', error)
+          return 'ユーザー登録ができませんでした'          
+        }
+      }
+    } catch (error) {
+      console.error('ユーザーの取得に失敗しました:', error);
+
+      return 'ユーザーの取得に失敗しましたr'
+      throw error;
+    }
+
+    redirect('/login');
   }
