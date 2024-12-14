@@ -1,6 +1,6 @@
 import { GlobeAltIcon } from '@heroicons/react/24/outline';
 import { lusitana } from '@/app/ui/fonts';
-import LoginUserInfo from '@/app/ui/dashboard/login-user-info';
+//import LoginUserInfo from '@/app/ui/dashboard/login-user-info';
 
 
 export default function AcmeLogo() {
@@ -10,7 +10,7 @@ export default function AcmeLogo() {
     >
       <GlobeAltIcon className="h-8 w-8 rotate-[10deg]" />
       <p className="text-[16px]">大会受付</p>
-      <LoginUserInfo />
+      { /*<LoginUserInfo />*/ }
    
     </div>
   );
