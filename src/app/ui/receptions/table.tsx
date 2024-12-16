@@ -4,6 +4,7 @@ import { UpdateReception, DeleteReception } from '@/app/ui/receptions/buttons';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredReceptions } from '@/app/lib/data';
 
+
 export default async function ReceptionsTable({
   query,
   currentPage,
@@ -11,7 +12,11 @@ export default async function ReceptionsTable({
   query: string;
   currentPage: number;
 }) {
-  const receptions = await fetchFilteredReceptions(query, currentPage);
+  const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
+
+  const receptions = await fetchFilteredReceptions(query, currentPage, user_id);
+
+  console.log('ReceptionsTable query', query)
 
 //  console.log('Table receptions', receptions)
 

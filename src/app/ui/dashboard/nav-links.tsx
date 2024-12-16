@@ -9,7 +9,7 @@ import {
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
   {
-    name: '申し込み・受付ですよ',
+    name: '申し込み・受付',
     href: '/dashboard',
     icon: DocumentDuplicateIcon,
   },

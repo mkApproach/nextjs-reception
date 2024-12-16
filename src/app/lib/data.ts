@@ -8,9 +8,10 @@ import {
   LatestReceptionRaw,
 } from './definitions';
 import { formatCurrency } from './utils';
-
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchLatestReceptions() {
+  noStore();
   try {
     const data = await sql<LatestReceptionRaw>`
       SELECT receptions.name,receptions.age, clubs.club_name, categorys.category_name, receptions.id
@@ -36,7 +37,9 @@ const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredReceptions(
   query: string,
   currentPage: number,
+  user_id: string,
 ) {
+  noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
@@ -46,6 +49,7 @@ export async function fetchFilteredReceptions(
         receptions.name,
         receptions.age,
         receptions.email,
+        receptions.user_id,
         receptions.date,
         clubs.club_name,
         categorys.category_name
@@ -53,11 +57,14 @@ export async function fetchFilteredReceptions(
       JOIN clubs ON receptions.club_id = clubs.id
       JOIN categorys ON receptions.category_id = categorys.id
       WHERE
+        (
         clubs.club_name ILIKE ${`%${query}%`} OR
         categorys.category_name ILIKE ${`%${query}%`} OR
         receptions.name::text ILIKE ${`%${query}%`} OR
         receptions.date::text ILIKE ${`%${query}%`} OR
         receptions.age ILIKE ${`%${query}%`}
+        ) AND
+        receptions.user_id = ${ user_id }
       ORDER BY receptions.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -69,18 +76,22 @@ export async function fetchFilteredReceptions(
   }
 }
 
-export async function fetchReceptionsPages(query: string) {
+export async function fetchReceptionsPages(query: string, user_id: string) {
+  noStore();
   try {
     const count = await sql`SELECT COUNT(*)
     FROM receptions
     JOIN clubs ON receptions.club_id = clubs.id
     JOIN categorys ON receptions.category_id = categorys.id
     WHERE
+      (
       clubs.club_name ILIKE ${`%${query}%`} OR
       categorys.category_name ILIKE ${`%${query}%`} OR
       receptions.name::text ILIKE ${`%${query}%`} OR
       receptions.date::text ILIKE ${`%${query}%`} OR
-      receptions.age ILIKE ${`%${query}%`}
+      receptions.age ILIKE ${`%${query}%`} 
+      ) AND
+        receptions.user_id = ${ user_id }
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -92,6 +103,7 @@ export async function fetchReceptionsPages(query: string) {
 }
 
 export async function fetchReceptionById(id: string) {
+  noStore();
   try {
     const data = await sql<ReceptionForm>`
       SELECT
@@ -119,6 +131,7 @@ export async function fetchReceptionById(id: string) {
 }
 
 export async function fetchClubs() {
+  noStore();
   try {
     const data = await sql<ClubField>`
       SELECT
@@ -137,6 +150,7 @@ export async function fetchClubs() {
 }
 
 export async function fetchCategorys() {
+  noStore();
   try {
     const data = await sql<CategoryField>`
       SELECT
@@ -156,6 +170,7 @@ export async function fetchCategorys() {
 
 
 export async function fetchFilteredClubs(query: string) {
+  noStore();
   try {
     const data = await sql<ClubsTableType>`
 		SELECT

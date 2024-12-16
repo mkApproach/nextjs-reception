@@ -17,33 +17,59 @@ const users = [
 
 const clubs = [
   {
-    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    name: '日高町卓球クラブ',
-    email: 'evil@rabbit.com',
-    password: '123456',
+    club_name: '日高町卓球クラブ',
+    club_email: 'evil@rabbit.com',
+    club_address: '豊岡市日高町十戸',
+    club_phonenumber: '0796-24-1810',
+    club_faxnumber: '0796-24-1812',
   },
   {
-    id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    name: '豊岡市卓球クラブ',
-    email: 'delba@oliveira.com',
-    password: '234567',
+    club_name: '豊岡市卓球クラブ',
+    club_email: 'delba@oliveira.com',
+    club_address: '豊岡市',
+    club_phonenumber: '0796-24-1810',
+    club_faxnumber: '0796-24-1812',
   },
   {
-    id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    name: '出石町卓球クラブ',
-    email: 'lee@robinson.com',
-    password: '345678',
+    club_name: '出石町卓球クラブ',
+    club_email: 'lee@robinson.com',
+    club_address: '豊岡市出石町',
+    club_phonenumber: '0796-24-1810',
+    club_faxnumber: '0796-24-1812',
+  },
+];
+
+const venues = [
+  {
+    venue_name: '豊岡市立総合体育館',
+    venue_postmail: 'evil@rabbit.com',
+    venue_address: '豊岡市大磯町1番75号',
+    venue_phonenumber: '0796-24-1810',
+    venue_faxnumber: '0796-24-1812',
+
+  },
+  {
+    venue_name: '日高文化体育館',
+    venue_postmail: 'hidaka@oliveira.com',
+    venue_address: '豊岡市日高町祢布９５４−６',
+    venue_phonenumber: '0796-42-2505',
+    venue_faxnumber: '0796-42-2505',
+  },
+  {
+    venue_name: 'ロードスカイ卓球場',
+    venue_postmail: 'lee@robinson.com',
+    venue_address: '豊岡市日高町山本１０１',
+    venue_phonenumber: '0796-42-5581',
+    venue_faxnumber: '0796-42-5581',
   },
 ];
 
 const categorys = [
   {
-    id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    name: '一般男子',
+    category_name: '一般男子',
   },
   {
-    id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    name: '一般女子',
+    category_name: '一般女子',
   },
 ];
 
@@ -52,54 +78,58 @@ const receptions = [
     name: '西田　清',
     age: '66',
     email: 'lee@robinson.com',
-    club_id: clubs[0].id,
-    category_id: categorys[0].id,
+    club_id: 1,
+    category_id: 1,
+    user_id: users[0].id,
     date: '2024-11-25',
   },
   {
     name: '中嶋　美行',
     age: '66', 
     email: 'lee@robinson.com',
-    club_id: clubs[0].id,
-    category_id: categorys[0].id,
+    club_id: 1,
+    category_id: 1,
+    user_id: users[0].id,
     date: '2024-11-25',
   },
   {
     name: '井本　千陽',
     age: '大学一年生', 
     email: 'lee@robinson.com',
-    club_id: clubs[0].id,
-    category_id: categorys[1].id,
+    club_id: 1,
+    category_id: 2,
+    user_id: users[0].id,
     date: '2024-11-25',
   },
   {
-    name: '西田　清',
-    age: '66',
-    email: 'lee@robinson.com',
-    club_id: clubs[0].id,
-    category_id: categorys[0].id,
+    name: '石井　杏奈',
+    age: '25',
+    email: 'anna@robinson.com',
+    club_id: 1,
+    category_id: 1,
+    user_id: users[0].id,
     date: '2024-11-25',
   },
   {
-    name: '中嶋　美行',
-    age: '66', 
+    name: '綾瀬　はるか',
+    age: '36', 
     email: 'lee@robinson.com',
-    club_id: clubs[0].id,
-    category_id: categorys[0].id,
+    club_id: 1,
+    category_id: 1,
+    user_id: users[1].id,
     date: '2024-11-25',
   },
   {
-    name: '井本　千陽',
-    age: '大学一年生', 
+    name: '清原　果耶',
+    age: '大学四年生', 
     email: 'lee@robinson.com',
-    club_id: clubs[0].id,
-    category_id: categorys[1].id,
+    club_id: 1,
+    category_id: 2,
+    user_id: users[1].id,
     date: '2024-11-25',
   },
-];
+]
 
 
 
-
-
-export { users, clubs, categorys, receptions };
+export { users, clubs, categorys, receptions, venues };

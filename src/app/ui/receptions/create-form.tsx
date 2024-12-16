@@ -11,12 +11,16 @@ import {
 import { Button } from '@/app/ui/button';
 import { createReception, State } from '@/app/lib/actions';
 import { useActionState } from 'react';
+import { useSession } from "next-auth/react"
 
 export default function Form({ clubs, categorys }: { clubs: ClubField[],  categorys: CategoryField[] }) {
+  const { data: session } = useSession();
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createReception, initialState);
 
-  console.log('createReception', createReception)
+  const user_id = session?.user?.id
+
+//  console.log('createReception', createReception)
 
   return (
     <form action={formAction}>
@@ -139,7 +143,7 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
           </div>
         </div>
 
-        {/* Reception Name */}
+        {/* Reception Email */}
         <div className="mb-4">
           <label htmlFor="email" className="mb-2 block text-sm font-medium">
             Email
@@ -164,6 +168,20 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
                   {error}
                 </p>
               ))}
+          </div>
+        </div>
+
+        {/* Reception user_id */}
+        <div className="mb-4">
+          <div>
+            <div>
+              <input //type="hidden"
+                id="user_id"
+                name="user_id"
+                value= {user_id}
+                className="w-full"
+              />
+            </div>
           </div>
         </div>
 

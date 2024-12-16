@@ -30,6 +30,7 @@ const FormSchema = z.object({
   .string()
   .email('正しいメールアドレスを入力してください。') // メールアドレス形式のバリデーション
   .regex(pattern), // 追加の正規表現によるバリデーション
+  user_id: z.string(),
   date: z.string(),
 });
 
@@ -68,6 +69,7 @@ export async function createReception(prevState: State, formData: FormData) {
       name: formData.get('name'),
       age: formData.get('age'),
       email: formData.get('email'),
+      user_id: formData.get('user_id'),
     });
    
     // If form validation fails, return errors early. Otherwise, continue.
@@ -79,15 +81,15 @@ export async function createReception(prevState: State, formData: FormData) {
     }
    
     // Prepare data for insertion into the database
-    const { clubId, categoryId, name, age, email } = validatedFields.data;
+    const { clubId, categoryId, name, age, email, user_id } = validatedFields.data;
   
     const date = new Date().toISOString().split('T')[0];
    
     // Insert data into the database
     try {
       await sql`
-        INSERT INTO receptions (name, age, email, club_Id, category_Id,  date)
-        VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${date})
+        INSERT INTO receptions (name, age, email, club_Id, category_Id, user_id, date)
+        VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${user_id}, ${date})
       `;
     } catch (error) {
       // If a database error occurs, return a more specific error.
@@ -104,22 +106,23 @@ export async function createReception(prevState: State, formData: FormData) {
   }
   
   export async function updateReception(id: number, formData: FormData) {
-    const { clubId, categoryId, name, age, email } = UpdateReception.parse({
+    const { clubId, categoryId, name, age, email, user_id } = UpdateReception.parse({
       clubId: formData.get('clubId'),
       categoryId: formData.get('categoryId'),
       name: formData.get('name'),
       age: formData.get('age'),
       email: formData.get('email'),
+      user_id: formData.get('user_id'),
     });
    
-    console.log('update quary', (typeof clubId), categoryId, name, age, email);
+    console.log('update quary', (typeof clubId), categoryId, name, age, email, user_id);
   
     const date = new Date().toISOString().split('T')[0];
    
     try {
       await sql`
           UPDATE receptions
-          SET name = ${name}, age = ${age}, email = ${email}, club_Id = ${clubId}, category_Id = ${categoryId}, date = ${date}
+          SET name = ${name}, age = ${age}, email = ${email}, club_Id = ${clubId}, category_Id = ${categoryId}, user_id = ${user_id}, date = ${date}
           WHERE id = ${id}
         `;
     } catch (error) {

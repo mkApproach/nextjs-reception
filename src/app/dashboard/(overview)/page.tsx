@@ -6,8 +6,10 @@ import { lusitana } from '@/app/ui/fonts';
 import { ReceptionsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchReceptionsPages } from '@/app/lib/data';
-import { Metadata } from 'next';
- 
+//import { Metadata } from 'next';
+import { Session } from 'inspector/promises';
+
+/* 
 export const metadata: Metadata = {
   title: {
     template: '%s | Acme Dashboard',
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
   description: 'The official Next.js Learn Dashboard built with App Router.',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
-
+*/
 export default async function Page(
     props: {
         searchParams?: Promise<{
@@ -26,11 +28,17 @@ export default async function Page(
     }
     
     ) {
+
+    const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
+
     const searchParams = await props.searchParams;
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
 
-    const totalPages = await fetchReceptionsPages(query);
+    const totalPages = await fetchReceptionsPages(query, user_id); 
+
+    console.log('query', query)
+
 
     return (
         <div className="w-full">
