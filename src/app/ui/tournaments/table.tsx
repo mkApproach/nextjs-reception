@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
+import { CreateReception } from '@/app/ui/tournaments/buttons';
 import {
   TournamentsTableType,
   FormattedTournamentsTable,
@@ -44,9 +45,12 @@ export default async function TournamentsTable({
                         <p className="text-sm text-gray-500">
                           開催日:　　{formatDateToLocal(tournament.date)}
                         </p>
+                        
                       </div>
+                        <div className="flex justify-end gap-2">
+                          <CreateReception id={tournament.id} />
+                        </div>
                     </div>
- 
                   </div>
                 ))}
               </div>
@@ -64,7 +68,10 @@ export default async function TournamentsTable({
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
                       開催日
-                    </th>                    
+                    </th>     
+                    <th scope="col" className="relative py-3 pl-6 pr-3">
+                      <span className="sr-only">Edit</span>
+                    </th>               
                   </tr>
                 </thead>
 
@@ -85,7 +92,11 @@ export default async function TournamentsTable({
                       <td className="whitespace-nowrap bg-white px-3 py-5 text-sm">
                         {formatDateToLocal(tournament.date)}
                       </td>
-
+                      <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                        <div className="flex justify-end gap-3">
+                          <CreateReception id={tournament.id} />
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

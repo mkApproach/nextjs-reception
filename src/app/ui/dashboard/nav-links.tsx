@@ -8,7 +8,6 @@ import {
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  { name: '大会', href: '/dashboard/tounaments', icon: UserGroupIcon },
   {
     name: '申し込み・受付',
     href: '/dashboard/receptions',
