@@ -30,9 +30,9 @@ export type Tournament = { // 大会
 export type TournamentsTableType = {
   id: number;
   tournament_name: string;
-  venue_id: number;
-  club_id: number;
   date: string;
+  club_name: string;
+  venue_name: string;
 };
 
 export type FormattedTournamentsTable = {
