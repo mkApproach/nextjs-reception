@@ -12,13 +12,14 @@ import { Button } from '@/app/ui/button';
 import { createReception, State } from '@/app/lib/actions';
 import { useActionState } from 'react';
 import { useSession } from "next-auth/react"
+import { auth } from '@/auth';
 
 export default function Form({ clubs, categorys }: { clubs: ClubField[],  categorys: CategoryField[] }) {
   const { data: session } = useSession();
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createReception, initialState);
 
-  const user_id = session?.user?.id
+  const user_id = session?.user?.id || ''
 
 //  console.log('createReception', createReception)
 
@@ -175,7 +176,7 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
         <div className="mb-4">
           <div>
             <div>
-              <input //type="hidden"
+              <input type="hidden"
                 id="user_id"
                 name="user_id"
                 value= {user_id}

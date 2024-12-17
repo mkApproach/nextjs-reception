@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
-import { clubs, categorys, receptions, venues,  users } from '../lib/placeholder-data';
+import { clubs, categorys, receptions, venues,  users, tournaments } from '../lib/placeholder-data';
 
 const client = await db.connect();
 
@@ -141,6 +141,33 @@ async function seedUsers() {
 }
 
 
+async function seedTournaments() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT EXISTS tournaments (
+      id SERIAL NOT NULL,
+      tournament_name VARCHAR(255) NOT NULL,
+      venue_id integer NOT NULL,
+      club_id integer NOT NULL,
+      date DATE NOT NULL,
+      PRIMARY KEY (id)
+    );
+  `;
+
+  const insertedTournaments = await Promise.all(
+    tournaments.map(
+      (tournament) => client.sql`
+        INSERT INTO tournaments (tournament_name, venue_id, club_id, date)
+        VALUES (${tournament.tournament_name}, ${tournament.venue_id},${tournament.club_id},${tournament.date})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedTournaments;
+}
+
 export async function GET() {
   // return Response.json({
   //  message:
@@ -150,8 +177,9 @@ export async function GET() {
     await client.sql`BEGIN`;
 //    await seedUsers();
 //    await seedClubs();
-//     await seedCategorys();
-     await seedReceptions();
+//    await seedCategorys();
+//    await seedReceptions();
+      await seedTournaments();
 //    await seedVenues();
 
      await client.sql`COMMIT`;

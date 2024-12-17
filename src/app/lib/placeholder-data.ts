@@ -64,6 +64,21 @@ const venues = [
   },
 ];
 
+const tournaments = [
+  {
+    tournament_name: '第52回日高オープン卓球大会',
+    venue_id: 2,
+    club_id: 1,
+    date: '2024-12-08',
+  },
+  {
+    tournament_name: '第53回日高オープン卓球大会',
+    venue_id: 2,
+    club_id: 1,
+    date: '2025-12-07',
+  },
+];
+
 const categorys = [
   {
     category_name: '一般男子',
@@ -132,4 +147,4 @@ const receptions = [
 
 
 
-export { users, clubs, categorys, receptions, venues };
+export { users, clubs, categorys, receptions, venues, tournaments };

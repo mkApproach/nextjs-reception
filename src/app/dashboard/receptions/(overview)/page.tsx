@@ -29,8 +29,12 @@ export default async function Page(
     
     ) {
 
-    const session = await auth();
-    const user_id = session?.user?.id || '';
+      const session = await auth();
+      const user_id = session?.user?.id || '';
+
+      console.log('auth.id', user_id)
+
+//    const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
 
     const searchParams = await props.searchParams;
     const query = searchParams?.query || '';

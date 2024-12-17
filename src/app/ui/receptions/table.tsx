@@ -8,11 +8,13 @@ import { fetchFilteredReceptions } from '@/app/lib/data';
 export default async function ReceptionsTable({
   query,
   currentPage,
+  user_id,
 }: {
   query: string;
   currentPage: number;
+  user_id: string;
 }) {
-  const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
+//  const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
 
   const receptions = await fetchFilteredReceptions(query, currentPage, user_id);
 

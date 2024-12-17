@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   ClubField,
   ClubsTableType,
+   TournamentsTableType,
   CategoryField,
   ReceptionForm,
   ReceptionsTable,
@@ -196,5 +197,38 @@ export async function fetchFilteredClubs(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch club table.');
+  }
+}
+
+export async function fetchFilteredTournaments(query: string) {
+  noStore();
+  try {
+    const data = await sql<TournamentsTableType>`
+		SELECT
+		  tournaments.id,
+		  tournaments.tournament_name,
+      tournaments.date,
+      clubs.club_name,
+      venues.venue_name
+		FROM tournaments
+      JOIN clubs ON tournaments.club_id = clubs.id
+      JOIN venues ON tournaments.venue_id = venues.id
+		WHERE
+		  tournaments.tournament_name ILIKE ${`%${query}%`} OR 
+      clubs.club_name ILIKE ${`%${query}%`} OR
+      venues.venue_name ILIKE ${`%${query}%`} OR
+      tournaments.date::text ILIKE ${`%${query}%`}
+
+		ORDER BY tournaments.id ASC
+	  `;
+
+    const tournaments = data.rows.map((tournament) => ({
+      ...tournament,
+    }));
+
+    return tournaments;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch tournament table.');
   }
 }

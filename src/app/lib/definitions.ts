@@ -23,6 +23,25 @@ export type Tournament = { // 大会
   id: number;
   tournament_name: string;
   venue_id: number;
+  club_id: number;
+  date: string;
+};
+
+export type TournamentsTableType = {
+  id: number;
+  tournament_name: string;
+  venue_id: number;
+  club_id: number;
+  date: string;
+};
+
+export type FormattedTournamentsTable = {
+  id: number;
+  tournament_name: string;
+  date: string;
+  club_name: string;
+  venue_name: string;
+
 };
 
 export type Club = {  // クラブ・個人
