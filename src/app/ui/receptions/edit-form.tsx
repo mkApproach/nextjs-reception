@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { updateReception } from '@/app/lib/actions';
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation";
 
 export default function EditReceptionForm({
   reception,
@@ -21,6 +22,7 @@ export default function EditReceptionForm({
   clubs: ClubField[];
   categorys: CategoryField[];
 }) {
+  const router = useRouter();
   const { data: session } = useSession();
   
   const updateReceptionWithId = updateReception.bind(null, reception.id);
@@ -159,12 +161,21 @@ export default function EditReceptionForm({
  
       </div>
       <div className="mt-6 flex justify-end gap-4">
+      <button className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+        onClick={() => {
+          router.back();
+        }}
+      >
+        Cancel
+      </button>
+        { /*
         <Link
           href="/dashboard/reception"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
+        */}
         <Button type="submit">更　新</Button>
       </div>
     </form>

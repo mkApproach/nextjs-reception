@@ -3,7 +3,14 @@ import Breadcrumbs from '@/app/ui/receptions/breadcrumbs';
 import { fetchReceptionById, fetchClubs, fetchCategorys } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
  
-export default async function Page(props: { params: Promise<{ id: string }> }) {
+export default async function Page(
+   props: { 
+    params: Promise<{ id: number }>
+   }
+
+ // props: { params: Promise<{ id: number }> }
+) {
+  
     const params = await props.params;
     const id = params.id;
     const [reception, clubs, categorys] = await Promise.all([
@@ -12,6 +19,11 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       fetchCategorys(),
     ]);
 
+ /*
+    const searchParams = props.searchParams;
+ //  const query = searchParams?.query.id*/
+
+   
     if (!reception) {
       notFound();
     }

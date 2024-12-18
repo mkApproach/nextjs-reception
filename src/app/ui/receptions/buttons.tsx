@@ -14,10 +14,14 @@ export function CreateReception() {
   );
 }
 
-export function UpdateReception({ id }: { id: number }) {
+export function UpdateReception({ id, tourn_id }: { id: number, tourn_id:number}) {
   return (
     <Link
-      href={`/dashboard/${id}/edit`}
+    //  href={`/dashboard/receptions/${id}/edit`} // ここにトーナメントIDを付ける
+      href={{
+        pathname: `/dashboard/receptions/${id}/edit`,
+        query: { id: tourn_id },
+      }}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />

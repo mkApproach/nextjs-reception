@@ -9,10 +9,12 @@ export default async function ReceptionsTable({
   query,
   currentPage,
   user_id,
+  tourn_id,
 }: {
   query: string;
   currentPage: number;
   user_id: string;
+  tourn_id: number;
 }) {
 //  const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
 
@@ -49,7 +51,7 @@ export default async function ReceptionsTable({
                     <p className="text-sm text-gray-500">{formatDateToLocal(reception.date)}</p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateReception id={reception.id} />
+                    <UpdateReception id={reception.id} tourn_id={tourn_id}/>
                     <DeleteReception id={reception.id} />
                   </div>
                 </div>
@@ -111,7 +113,7 @@ export default async function ReceptionsTable({
 
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateReception id={reception.id} />
+                      <UpdateReception id={reception.id}  tourn_id={tourn_id} />
                       <DeleteReception id={reception.id} />
                     </div>
                   </td>

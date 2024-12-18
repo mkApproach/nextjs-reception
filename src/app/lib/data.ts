@@ -103,7 +103,7 @@ export async function fetchReceptionsPages(query: string, user_id: string) {
   }
 }
 
-export async function fetchReceptionById(id: string) {
+export async function fetchReceptionById(id: number) {
   noStore();
   try {
     const data = await sql<ReceptionForm>`
@@ -233,7 +233,7 @@ export async function fetchFilteredTournaments(query: string) {
   }
 }
 
-export async function fetchTournamentById(id: string) {
+export async function fetchTournamentById(id: number) {
   noStore();
   try {
     const data = await sql<TournamentsTableType>`

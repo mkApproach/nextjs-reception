@@ -21,21 +21,10 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
-async function getTournament(id: number): Promise<Tournament | undefined> {
-//  console.log('email', email)
-  try {
-//    const user = await sql<User>`SELECT * FROM users`;
-    const tournament = await sql<Tournament>`SELECT * FROM tournaments WHERE id=${id}`;
-    return tournament.rows[0];
-  } catch (error) {
-    console.error('Failed to fetch tournament:', error);
-    throw new Error('Failed to fetch tournament.');
-  }
-}
-
 //export default async function Page(props: { params: Promise<{ id: string }> }) {
 export default async function Page(
-    props: { params: Promise<{ id: string, name:string }>,
+    props: { 
+        params: Promise<{ id: number, name:string }>,
         searchParams?: Promise<{
         query?: string;
         page?: string;
@@ -44,23 +33,19 @@ export default async function Page(
       
     ) {
 
-      console.log('[id]page')
+    console.log('[id]page')
 
+    const session = await auth();
+    const user_id = session?.user?.id || '';
 
+    const params = await props.params;
+    const tourn_id = params.id;
 
+    console.log('大会.id', tourn_id)
 
-      const session = await auth();
-      const user_id = session?.user?.id || '';
-
-      const params = await props.params;
-      const id = params.id;
-
-      console.log('router.id', id)
-
-      const [tournaments] = await Promise.all([
-        fetchTournamentById(id),
-
-        ]);
+    const [tournaments] = await Promise.all([
+      fetchTournamentById(tourn_id),
+    ]);
      
 
 //    const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
@@ -80,14 +65,14 @@ export default async function Page(
     return (
         <div className="w-full">
           <div className="flex w-full items-center justify-between">
-            <h1 className={`${lusitana.className} text-2xl`}>受付一覧　　　 { tournaments.name }</h1>
+            <h1 className={`${lusitana.className} text-2xl`}>{ tournaments.name }</h1>
           </div>
           <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
             <Search placeholder="受付の検索..." />
             <CreateReception />  { /* 新規受付処理 */ }
           </div>
           <Suspense key={query + currentPage} fallback={<ReceptionsTableSkeleton />}>
-            <ReceptionsTable query={query} currentPage={currentPage} user_id={user_id}/>  { /* 受付の一覧表示（更新・削除）*/}
+            <ReceptionsTable query={query} currentPage={currentPage} user_id={user_id} tourn_id={tourn_id}/>  { /* 受付の一覧表示（更新・削除）*/}
           </Suspense>
           <div className="mt-5 flex w-full justify-center">
             <Pagination totalPages={totalPages} />
