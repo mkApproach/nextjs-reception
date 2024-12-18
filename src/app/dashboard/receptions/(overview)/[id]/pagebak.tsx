@@ -19,30 +19,40 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
+//export default async function Page(props: { params: Promise<{ id: string }> }) {
 export default async function Page(
-    props: {
+    props: { params: Promise<{ id: string, name:string }>,
         searchParams?: Promise<{
         query?: string;
         page?: string;
-        }>;
-    }
-    
+      }>;
+    },
+      
     ) {
+
+      console.log('[id]page')
+
 
       const session = await auth();
       const user_id = session?.user?.id || '';
 
-      console.log('auth.id', user_id)
+      const params = await props.params;
+      const id = params.id;
+
+      console.log('router.id', id)
+     
 
 //    const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
 
     const searchParams = await props.searchParams;
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
+    
 
     const totalPages = await fetchReceptionsPages(query, user_id); 
 
     console.log('query', query)
+   
 
 
     return (

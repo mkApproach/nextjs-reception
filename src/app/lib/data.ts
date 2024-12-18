@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres';
 import {
   ClubField,
   ClubsTableType,
-   TournamentsTableType,
+  TournamentsTableType,
   CategoryField,
   ReceptionForm,
   ReceptionsTable,
@@ -230,5 +230,29 @@ export async function fetchFilteredTournaments(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch tournament table.');
+  }
+}
+
+export async function fetchTournamentById(id: string) {
+  noStore();
+  try {
+    const data = await sql<TournamentsTableType>`
+      SELECT
+      tournaments.id,
+      tournaments.tournament_name
+      FROM tournaments
+      WHERE tournaments.id = ${id};
+    `;
+
+    const tournament = data.rows.map((tournament) => ({
+      ...tournament,
+      // Convert name from cents to dollars
+      name: tournament.tournament_name,
+    }));
+
+    return tournament[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch tournament.');
   }
 }
