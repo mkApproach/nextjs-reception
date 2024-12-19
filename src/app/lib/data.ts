@@ -39,6 +39,7 @@ export async function fetchFilteredReceptions(
   query: string,
   currentPage: number,
   user_id: string,
+  tourn_id: number,
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -58,14 +59,17 @@ export async function fetchFilteredReceptions(
       JOIN clubs ON receptions.club_id = clubs.id
       JOIN categorys ON receptions.category_id = categorys.id
       WHERE
-        (
+
+        receptions.user_id = ${ user_id } AND
+        receptions.tourn_id = ${ tourn_id }   
+        AND
+         (
         clubs.club_name ILIKE ${`%${query}%`} OR
         categorys.category_name ILIKE ${`%${query}%`} OR
         receptions.name::text ILIKE ${`%${query}%`} OR
         receptions.date::text ILIKE ${`%${query}%`} OR
         receptions.age ILIKE ${`%${query}%`}
-        ) AND
-        receptions.user_id = ${ user_id }
+        )      
       ORDER BY receptions.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -77,7 +81,7 @@ export async function fetchFilteredReceptions(
   }
 }
 
-export async function fetchReceptionsPages(query: string, user_id: string) {
+export async function fetchReceptionsPages(query: string, user_id: string, tourn_id: number) {
   noStore();
   try {
     const count = await sql`SELECT COUNT(*)
@@ -85,14 +89,18 @@ export async function fetchReceptionsPages(query: string, user_id: string) {
     JOIN clubs ON receptions.club_id = clubs.id
     JOIN categorys ON receptions.category_id = categorys.id
     WHERE
-      (
-      clubs.club_name ILIKE ${`%${query}%`} OR
-      categorys.category_name ILIKE ${`%${query}%`} OR
-      receptions.name::text ILIKE ${`%${query}%`} OR
-      receptions.date::text ILIKE ${`%${query}%`} OR
-      receptions.age ILIKE ${`%${query}%`} 
-      ) AND
-        receptions.user_id = ${ user_id }
+        receptions.user_id = ${ user_id } AND
+        receptions.tourn_id = ${ tourn_id }
+        AND 
+         (
+        clubs.club_name ILIKE ${`%${query}%`} OR
+        categorys.category_name ILIKE ${`%${query}%`} OR
+        receptions.name::text ILIKE ${`%${query}%`} OR
+        receptions.date::text ILIKE ${`%${query}%`} OR
+        receptions.age ILIKE ${`%${query}%`}
+        ) 
+    
+
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);

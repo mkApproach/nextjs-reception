@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 //export default async function Page(props: { params: Promise<{ id: string }> }) {
 export default async function Page(
     props: { 
-        params: Promise<{ id: number, name:string }>,
+        params: Promise<{ id: number }>,
         searchParams?: Promise<{
         query?: string;
         page?: string;
@@ -55,10 +55,10 @@ export default async function Page(
     const currentPage = Number(searchParams?.page) || 1;
     
 
-    const totalPages = await fetchReceptionsPages(query, user_id); 
+    const totalPages = await fetchReceptionsPages(query, user_id, tourn_id); 
 
 
-    console.log('tournament', tournaments.name)
+    console.log('tournament', tournaments.name, tourn_id)
    
 
 

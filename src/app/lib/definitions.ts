@@ -66,6 +66,7 @@ export type Reception = {
   email: string;
   club_id: number;
   category_id: number;
+  tourn_id: number;
   user_id: string;
   date: string;
 };
@@ -79,6 +80,7 @@ export type LatestReception = {
   email: string;
   club_id: number;
   category_id: number;
+  tourn_id: number;
   user_id: string;
   date: string;
 };
@@ -96,6 +98,7 @@ export type ReceptionsTable = {
   date: string;
   club_name: string;
   category_name: string;
+  tourn_id: number;
 };
 
 

@@ -96,6 +96,7 @@ async function seedReceptions() {
        email VARCHAR(128) NOT NULL,
        club_id integer NOT NULL,
        category_id integer NOT NULL,
+       tourn_id integer NOT NULL,
        user_id TEXT NOT NULL,
        date DATE NOT NULL,
        PRIMARY KEY (id)
@@ -105,8 +106,8 @@ async function seedReceptions() {
   const insertedReceptions = await Promise.all(
     receptions.map(
       (reception) => client.sql`
-        INSERT INTO receptions (name, age, email, club_id, category_id, user_id, date)
-        VALUES (${reception.name},${reception.age},${reception.email},${reception.club_id},${reception.category_id},${reception.user_id},${reception.date})
+        INSERT INTO receptions (name, age, email, club_id, category_id, tourn_id, user_id, date)
+        VALUES (${reception.name},${reception.age},${reception.email},${reception.club_id},${reception.category_id},${reception.tourn_id},${reception.user_id},${reception.date})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -178,8 +179,8 @@ export async function GET() {
 //    await seedUsers();
 //    await seedClubs();
 //    await seedCategorys();
-//    await seedReceptions();
-      await seedTournaments();
+    await seedReceptions();
+//    await seedTournaments();
 //    await seedVenues();
 
      await client.sql`COMMIT`;

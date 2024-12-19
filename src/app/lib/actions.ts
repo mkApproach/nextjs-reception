@@ -61,7 +61,7 @@ const CreateReception = FormSchema.omit({ id: true, date: true });
 const UpdateReception = FormSchema.omit({ id: true, date: true });
 const CreateUser = FormUser.omit({ id: true });
 
-export async function createReception(prevState: State, formData: FormData) {
+export async function createReception(prevState: State, formData: FormData, tourn_id: number) {
     // Validate form using Zod
     const validatedFields = CreateReception.safeParse({
       clubId: formData.get('clubId'),
@@ -88,8 +88,8 @@ export async function createReception(prevState: State, formData: FormData) {
     // Insert data into the database
     try {
       await sql`
-        INSERT INTO receptions (name, age, email, club_Id, category_Id, user_id, date)
-        VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${user_id}, ${date})
+        INSERT INTO receptions (name, age, email, club_Id, category_Id, tourn_id, user_id, date)
+        VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${tourn_id}, ${user_id}, ${date})
       `;
     } catch (error) {
       // If a database error occurs, return a more specific error.
@@ -101,11 +101,11 @@ export async function createReception(prevState: State, formData: FormData) {
    
     // Revalidate the cache for the receptions page and redirect the user.
     console.log('error', error)
-    revalidatePath('/dashboard');
-    redirect('/dashboard');
+    revalidatePath(`/dashboard/receptions[${tourn_id}list]`);
+    redirect(`/dashboard/receptions[${tourn_id}list]`);
   }
   
-  export async function updateReception(id: number, formData: FormData) {
+  export async function updateReception(id: number, formData: FormData, tourn_id: number) {
     const { clubId, categoryId, name, age, email, user_id } = UpdateReception.parse({
       clubId: formData.get('clubId'),
       categoryId: formData.get('categoryId'),
@@ -130,8 +130,8 @@ export async function createReception(prevState: State, formData: FormData) {
       return { message: 'Database Error: Failed to Update Reception.' };
     }
    
-    revalidatePath('/dashboard');
-    redirect('/dashboard');
+    revalidatePath(`/dashboard/receptions/${tourn_id}/list`);
+    redirect(`/dashboard/receptions/${tourn_id}/list`);
   }
   
   

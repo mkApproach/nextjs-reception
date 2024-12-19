@@ -5,7 +5,7 @@ import { deleteReception } from '@/app/lib/actions';
 export function CreateReception() {
   return (
     <Link
-      href="/dashboard/create"
+      href="/dashboard/receptions/create"
       className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
     >
       <span className="hidden md:block">新規の申し込み</span>{' '}
@@ -20,7 +20,7 @@ export function UpdateReception({ id, tourn_id }: { id: number, tourn_id:number}
     //  href={`/dashboard/receptions/${id}/edit`} // ここにトーナメントIDを付ける
       href={{
         pathname: `/dashboard/receptions/${id}/edit`,
-        query: { id: tourn_id },
+        query: { tourn_id: tourn_id },
       }}
       className="rounded-md border p-2 hover:bg-gray-100"
     >

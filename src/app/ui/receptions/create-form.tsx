@@ -12,9 +12,11 @@ import { Button } from '@/app/ui/button';
 import { createReception, State } from '@/app/lib/actions';
 import { useActionState } from 'react';
 import { useSession } from "next-auth/react"
-import { auth } from '@/auth';
+import { useRouter } from "next/navigation";
+//import { auth } from '@/auth';
 
 export default function Form({ clubs, categorys }: { clubs: ClubField[],  categorys: CategoryField[] }) {
+  const router = useRouter();
   const { data: session } = useSession();
   const initialState: State = { message: null, errors: {} };
   const [state, formAction] = useActionState(createReception, initialState);
@@ -188,12 +190,13 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
 
       </div>
       <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/receptions"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
+        <button className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Cancel
+          </button>
         <Button type="submit">作　成</Button>
       </div>
     </form>
