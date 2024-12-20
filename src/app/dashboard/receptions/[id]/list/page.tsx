@@ -69,7 +69,7 @@ export default async function Page(
           </div>
           <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
             <Search placeholder="受付の検索..." />
-            <CreateReception />  { /* 新規受付処理 */ }
+            <CreateReception tourn_id={tourn_id}/>  { /* 新規受付処理 */ }
           </div>
           <Suspense key={query + currentPage} fallback={<ReceptionsTableSkeleton />}>
             <ReceptionsTable query={query} currentPage={currentPage} user_id={user_id} tourn_id={tourn_id}/>  { /* 受付の一覧表示（更新・削除）*/}

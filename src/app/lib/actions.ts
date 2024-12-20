@@ -30,7 +30,9 @@ const FormSchema = z.object({
   .string()
   .email('正しいメールアドレスを入力してください。') // メールアドレス形式のバリデーション
   .regex(pattern), // 追加の正規表現によるバリデーション
+  tourn_id: z.string(),
   user_id: z.string(),
+
   date: z.string(),
 });
 
@@ -61,7 +63,7 @@ const CreateReception = FormSchema.omit({ id: true, date: true });
 const UpdateReception = FormSchema.omit({ id: true, date: true });
 const CreateUser = FormUser.omit({ id: true });
 
-export async function createReception(prevState: State, formData: FormData, tourn_id: number) {
+export async function createReception(prevState: State, formData: FormData) {
     // Validate form using Zod
     const validatedFields = CreateReception.safeParse({
       clubId: formData.get('clubId'),
@@ -70,6 +72,7 @@ export async function createReception(prevState: State, formData: FormData, tour
       age: formData.get('age'),
       email: formData.get('email'),
       user_id: formData.get('user_id'),
+      tourn_id: formData.get('tourn_id'),
     });
    
     // If form validation fails, return errors early. Otherwise, continue.
@@ -81,15 +84,16 @@ export async function createReception(prevState: State, formData: FormData, tour
     }
    
     // Prepare data for insertion into the database
-    const { clubId, categoryId, name, age, email, user_id } = validatedFields.data;
+    const { clubId, categoryId, name, age, email, user_id, tourn_id } = validatedFields.data;
   
     const date = new Date().toISOString().split('T')[0];
+    const tourn_id_num = Number(tourn_id);
    
     // Insert data into the database
     try {
       await sql`
         INSERT INTO receptions (name, age, email, club_Id, category_Id, tourn_id, user_id, date)
-        VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${tourn_id}, ${user_id}, ${date})
+        VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${tourn_id_num}, ${user_id}, ${date})
       `;
     } catch (error) {
       // If a database error occurs, return a more specific error.
@@ -98,31 +102,33 @@ export async function createReception(prevState: State, formData: FormData, tour
         message: 'Database Error: Failed to Create Reception.',
       };
     }
-   
+  
     // Revalidate the cache for the receptions page and redirect the user.
     console.log('error', error)
-    revalidatePath(`/dashboard/receptions[${tourn_id}list]`);
-    redirect(`/dashboard/receptions[${tourn_id}list]`);
+    revalidatePath(`/dashboard/receptions/${tourn_id_num}/list`);
+    redirect(`/dashboard/receptions/${tourn_id_num}/list`);
   }
   
-  export async function updateReception(id: number, formData: FormData, tourn_id: number) {
-    const { clubId, categoryId, name, age, email, user_id } = UpdateReception.parse({
+  export async function updateReception(id: number, formData: FormData) {
+    const { clubId, categoryId, name, age, email, user_id, tourn_id } = UpdateReception.parse({
       clubId: formData.get('clubId'),
       categoryId: formData.get('categoryId'),
       name: formData.get('name'),
       age: formData.get('age'),
       email: formData.get('email'),
       user_id: formData.get('user_id'),
+      tourn_id: formData.get('tourn_id'),
     });
    
     console.log('update quary', (typeof clubId), categoryId, name, age, email, user_id);
   
     const date = new Date().toISOString().split('T')[0];
+    const tourn_id_num = Number(tourn_id);
    
     try {
       await sql`
           UPDATE receptions
-          SET name = ${name}, age = ${age}, email = ${email}, club_Id = ${clubId}, category_Id = ${categoryId}, user_id = ${user_id}, date = ${date}
+          SET name = ${name}, age = ${age}, email = ${email}, club_Id = ${clubId}, category_Id = ${categoryId}, date = ${date}
           WHERE id = ${id}
         `;
     } catch (error) {
@@ -130,8 +136,8 @@ export async function createReception(prevState: State, formData: FormData, tour
       return { message: 'Database Error: Failed to Update Reception.' };
     }
    
-    revalidatePath(`/dashboard/receptions/${tourn_id}/list`);
-    redirect(`/dashboard/receptions/${tourn_id}/list`);
+    revalidatePath(`/dashboard/receptions/${tourn_id_num}/list`);
+    redirect(`/dashboard/receptions/${tourn_id_num}/list`);
   }
   
   

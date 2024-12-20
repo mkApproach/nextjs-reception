@@ -15,7 +15,9 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
 //import { auth } from '@/auth';
 
-export default function Form({ clubs, categorys }: { clubs: ClubField[],  categorys: CategoryField[] }) {
+export default function Form(
+  { clubs, categorys, tourn_id }
+  : { clubs: ClubField[],  categorys: CategoryField[], tourn_id: number }) {
   const router = useRouter();
   const { data: session } = useSession();
   const initialState: State = { message: null, errors: {} };
@@ -178,10 +180,24 @@ export default function Form({ clubs, categorys }: { clubs: ClubField[],  catego
         <div className="mb-4">
           <div>
             <div>
-              <input type="hidden"
+              <input //type="hidden"
                 id="user_id"
                 name="user_id"
-                value= {user_id}
+                defaultValue={user_id}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Reception tourn_id */}
+        <div className="mb-4">
+          <div>
+            <div>
+              <input //type="hidden"
+                id="tourn_id"
+                name="tourn_id"
+                defaultValue={tourn_id}
                 className="w-full"
               />
             </div>

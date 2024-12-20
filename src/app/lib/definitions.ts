@@ -139,5 +139,7 @@ export type ReceptionForm = {
   email: string;
   club_id: number;
   category_id: number;
+  tourn_id: number;
+  user_id: number
   date: string;
 };

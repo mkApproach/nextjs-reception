@@ -148,10 +148,24 @@ export default function EditReceptionForm({
         <div className="mb-4">
           <div>
             <div>
-              <input type="hidden"
+              <input //type="hidden"
                 id="user_id"
                 name="user_id"
-                value= {user_id}
+                defaultValue= {reception.user_id}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Reception tourn_id */}
+        <div className="mb-4">
+          <div>
+            <div>
+              <input //type="hidden"
+                id="tourn_id"
+                name="tourn_id"
+                defaultValue={reception.tourn_id}
                 className="w-full"
               />
             </div>
