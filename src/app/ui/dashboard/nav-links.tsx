@@ -1,4 +1,5 @@
 import {
+  UsersIcon,
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
@@ -8,12 +9,7 @@ import {
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  {
-    name: '申し込み・受付',
-    href: '/dashboard/receptions',
-    icon: DocumentDuplicateIcon,
-  },
-  { name: 'クラブ・協会', href: '/dashboard/clubs', icon: UserGroupIcon },
+  { name: 'クラブ・協会', href: '/dashboard/clubs', icon: UsersIcon },
 ];
 
 export default function NavLinks() {
