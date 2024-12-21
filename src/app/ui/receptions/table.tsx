@@ -1,6 +1,5 @@
-import Image from 'next/image';
+//import Image from 'next/image';
 import { UpdateReception, DeleteReception } from '@/app/ui/receptions/buttons';
-//import ReceptionAge from '@/app/ui/receptions/age';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredReceptions } from '@/app/lib/data';
 
@@ -20,7 +19,7 @@ export default async function ReceptionsTable({
 
   const receptions = await fetchFilteredReceptions(query, currentPage, user_id, tourn_id);
 
-  console.log('ReceptionsTable query', query, tourn_id)
+//  console.log('ReceptionsTable query', query, tourn_id)
 
 //  console.log('Table receptions', receptions)
 

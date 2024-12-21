@@ -8,8 +8,8 @@ import { Suspense } from 'react';
 import { fetchReceptionsPages, fetchTournamentById } from '@/app/lib/data';
 import { Metadata } from 'next';
 import { auth } from '@/auth';
-import { sql } from '@vercel/postgres';
-import type { Tournament } from '@/app/lib/definitions';
+//import { sql } from '@vercel/postgres';
+//import type { Tournament } from '@/app/lib/definitions';
 
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export default async function Page(
     const params = await props.params;
     const tourn_id = params.id;
 
-    console.log('大会.id', tourn_id)
+//    console.log('大会.id', tourn_id)
 
     const [tournaments] = await Promise.all([
       fetchTournamentById(tourn_id),
@@ -58,7 +58,7 @@ export default async function Page(
     const totalPages = await fetchReceptionsPages(query, user_id, tourn_id); 
 
 
-    console.log('tournament', tournaments.name, tourn_id)
+//    console.log('tournament', tournaments.name, tourn_id)
    
 
 
