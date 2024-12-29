@@ -33,8 +33,6 @@ export default async function Page(
       
     ) {
 
-    console.log('[id]page')
-
     const session = await auth();
     const user_id = session?.user?.id || '';
 

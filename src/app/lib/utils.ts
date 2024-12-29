@@ -18,20 +18,10 @@ export const formatDateToLocal = (
   const day = tergetdate.getDay();
   const week = ["日", "月", "火", "水", "木", "金", "土"][day];
 
-  console.log(tergetdate)
+//  console.log(tergetdate)
 
   return `${year}年${month}月${date}日  (${week})`
 
-  /*
-  console.log(date)
-  const options: Intl.DateTimeFormatOptions = {
-   year: 'numeric',
-   month: 'numeric',
-   day: 'numeric',
- 
-  };
-  const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);*/
 };
 
 

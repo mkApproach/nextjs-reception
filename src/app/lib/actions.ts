@@ -11,6 +11,9 @@ import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import bcrypt from 'bcrypt';
 
+import nodemailer from "nodemailer";
+//import axios, { AxiosError } from "axios";
+
 // 正規表現を使用して、有効な文字だけを含む文字列を定義します。
 const pattern = /^[\u0021-\u007e]+$/u
  
@@ -95,6 +98,29 @@ export async function createReception(prevState: State, formData: FormData) {
         INSERT INTO receptions (name, age, email, club_Id, category_Id, tourn_id, user_id, date)
         VALUES (${name}, ${age}, ${email}, ${clubId}, ${categoryId}, ${tourn_id_num}, ${user_id}, ${date})
       `;
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL_SEND_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        });
+      
+        const mailOptions = {
+          from: process.env.EMAIL_SEND_USER,
+          to: `${email}`,
+          subject: `試合の申し込み ${name} 様`,
+          text: `送信者：日高町卓球協会 ${process.env.EMAIL_RECEIVE_USER}\n\n内容:受け付けました。`,
+        };
+      
+        try {
+          await transporter.sendMail(mailOptions)
+          //return new Response(JSON.stringify({ message: "送信成功" }), { status: 200 })
+        } catch (error) {
+          console.log(error);
+          //return new Response(JSON.stringify({ message: "送信失敗" }), { status: 500 })
+        }
+
     } catch (error) {
       // If a database error occurs, return a more specific error.
       console.log('error', error)
