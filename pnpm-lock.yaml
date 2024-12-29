@@ -15,6 +15,9 @@ dependencies:
   '@tailwindcss/forms':
     specifier: ^0.5.9
     version: 0.5.9(tailwindcss@3.4.15)
+  '@types/nodemailer':
+    specifier: ^6.4.17
+    version: 6.4.17
   '@vercel/postgres':
     specifier: ^0.10.0
     version: 0.10.0
@@ -32,7 +35,10 @@ dependencies:
     version: 15.0.3(react-dom@19.0.0-rc-cd22717c-20241013)(react@19.0.0-rc-cd22717c-20241013)
   next-auth:
     specifier: 5.0.0-beta.25
-    version: 5.0.0-beta.25(next@15.0.3)(react@19.0.0-rc-cd22717c-20241013)
+    version: 5.0.0-beta.25(next@15.0.3)(nodemailer@6.9.16)(react@19.0.0-rc-cd22717c-20241013)
+  nodemailer:
+    specifier: ^6.9.16
+    version: 6.9.16
   postcss:
     specifier: 8.4.49
     version: 8.4.49
@@ -76,7 +82,7 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /@auth/core@0.37.2:
+  /@auth/core@0.37.2(nodemailer@6.9.16):
     resolution: {integrity: sha512-kUvzyvkcd6h1vpeMAojK2y7+PAV5H+0Cc9+ZlKYDFhDY31AlvsB+GW5vNO4qE3Y07KeQgvNO9U0QUx/fN62kBw==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
@@ -94,6 +100,7 @@ packages:
       '@types/cookie': 0.6.0
       cookie: 0.7.1
       jose: 5.9.6
+      nodemailer: 6.9.16
       oauth4webapi: 3.1.4
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
@@ -502,6 +509,12 @@ packages:
     resolution: {integrity: sha512-qKgsUwfHZV2WCWLAnVP1JqnpE6Im6h3Y0+fYgMTasNQ7V++CBX5OT1as0g0f+OyubbFqhf6XVNIsmN4IIhEgGQ==}
     dependencies:
       undici-types: 6.20.0
+
+  /@types/nodemailer@6.4.17:
+    resolution: {integrity: sha512-I9CCaIp6DTldEg7vyUTZi8+9Vo0hi1/T8gv3C89yk1rSAAzoKQ8H8ki/jBYJSFoH/BisgLP8tkZMlQ91CIquww==}
+    dependencies:
+      '@types/node': 22.10.1
+    dev: false
 
   /@types/pg@8.11.6:
     resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
@@ -1144,7 +1157,7 @@ packages:
     hasBin: true
     dev: false
 
-  /next-auth@5.0.0-beta.25(next@15.0.3)(react@19.0.0-rc-cd22717c-20241013):
+  /next-auth@5.0.0-beta.25(next@15.0.3)(nodemailer@6.9.16)(react@19.0.0-rc-cd22717c-20241013):
     resolution: {integrity: sha512-2dJJw1sHQl2qxCrRk+KTQbeH+izFbGFPuJj5eGgBZFYyiYYtvlrBeUw1E/OJJxTRjuxbSYGnCTkUIRsIIW0bog==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
@@ -1160,8 +1173,9 @@ packages:
       nodemailer:
         optional: true
     dependencies:
-      '@auth/core': 0.37.2
+      '@auth/core': 0.37.2(nodemailer@6.9.16)
       next: 15.0.3(react-dom@19.0.0-rc-cd22717c-20241013)(react@19.0.0-rc-cd22717c-20241013)
+      nodemailer: 6.9.16
       react: 19.0.0-rc-cd22717c-20241013
     dev: false
 
@@ -1233,6 +1247,11 @@ packages:
 
   /node-releases@2.0.18:
     resolution: {integrity: sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==}
+    dev: false
+
+  /nodemailer@6.9.16:
+    resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nopt@5.0.0:
