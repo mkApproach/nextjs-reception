@@ -35,11 +35,12 @@ export default async function Page(
 
     const session = await auth();
     const user_id = session?.user?.id || '';
+//    const user_name = session?.user?.name || '';
 
     const params = await props.params;
     const tourn_id = params.id;
 
-//    console.log('大会.id', tourn_id)
+  //  console.log('page[] user_name', user_name)
 
     const [tournaments] = await Promise.all([
       fetchTournamentById(tourn_id),
