@@ -70,7 +70,7 @@ export async function fetchFilteredReceptions(
         receptions.date::text ILIKE ${`%${query}%`} OR
         receptions.age ILIKE ${`%${query}%`}
         )      
-      ORDER BY receptions.date DESC
+      ORDER BY receptions.date DESC, receptions.id DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
