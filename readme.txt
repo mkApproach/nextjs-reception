@@ -11,7 +11,7 @@ git push -u origin main
 
 git init
 git add .
-git age
+git status
 git commit -m 'firstCommit'
 git branch -M main
 git push -u origin main
