@@ -108,7 +108,7 @@ export async function createReception(prevState: State, formData: FormData) {
         });
 
         const session = await auth();
-        const user_email = session?.user?.email || '?????';
+        const user_email = session?.user?.email || '';
         const user_name = session?.user?.name || '';
 
         console.log('user_email', user_email)
