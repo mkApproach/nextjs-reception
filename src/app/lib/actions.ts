@@ -12,6 +12,7 @@ import { AuthError } from 'next-auth';
 import bcrypt from 'bcrypt';
 
 import nodemailer from "nodemailer";
+import { toZonedTime } from 'date-fns-tz';
 import { auth } from '@/auth';
 
 // 正規表現を使用して、有効な文字だけを含む文字列を定義します。
@@ -88,8 +89,10 @@ export async function createReception(prevState: State, formData: FormData) {
    
     // Prepare data for insertion into the database
     const { clubId, categoryId, name, age, email, user_id, tourn_id } = validatedFields.data;
+
+    const date = toZonedTime(new Date(), 'Asia/Tokyo');
   
-    const date = new Date().toLocaleString("ja");
+  //  const date = new Date().toLocaleString("ja");
 
     const tourn_id_num = Number(tourn_id);
    
