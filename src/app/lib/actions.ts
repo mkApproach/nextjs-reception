@@ -90,7 +90,7 @@ export async function createReception(prevState: State, formData: FormData) {
     // Prepare data for insertion into the database
     const { clubId, categoryId, name, age, email, user_id, tourn_id } = validatedFields.data;
 
-    const date = toZonedTime(new Date(), 'Asia/Tokyo');
+    const date = toZonedTime(new Date(), 'Asia/Tokyo').toLocaleString("ja");
   
   //  const date = new Date().toLocaleString("ja");
 
