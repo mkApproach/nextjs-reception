@@ -12,7 +12,7 @@ import { AuthError } from 'next-auth';
 import bcrypt from 'bcrypt';
 
 import nodemailer from "nodemailer";
-//import axios, { AxiosError } from "axios";
+import { auth } from '@/auth';
 
 // 正規表現を使用して、有効な文字だけを含む文字列を定義します。
 const pattern = /^[\u0021-\u007e]+$/u
@@ -89,7 +89,8 @@ export async function createReception(prevState: State, formData: FormData) {
     // Prepare data for insertion into the database
     const { clubId, categoryId, name, age, email, user_id, tourn_id } = validatedFields.data;
   
-    const date = new Date().toISOString().split('T')[0];
+    const date = new Date().toLocaleString("ja");
+
     const tourn_id_num = Number(tourn_id);
    
     // Insert data into the database
@@ -105,32 +106,37 @@ export async function createReception(prevState: State, formData: FormData) {
             pass: process.env.EMAIL_PASS,
           },
         });
+
+        const session = await auth();
+        const user_email = session?.user?.email || '?????';
+        const user_name = session?.user?.name || '';
+
+        console.log('user_email', user_email)
       
         const mailOptions = {
           from: process.env.EMAIL_SEND_USER,
-          to: `${email}`,
-          subject: `試合の申し込み ${name} 様`,
-          text: `送信者：日高町卓球協会 ${process.env.EMAIL_RECEIVE_USER}\n\n内容:受け付けました。`,
+          to: `${user_email}`,
+          subject: `試合の申し込み ${user_name} 様`,
+          text: `送信者：日高町卓球協会 ${process.env.EMAIL_RECEIVE_USER}\n\n${name}様分\n\n内容:受け付けました。`,
         };
       
         try {
           await transporter.sendMail(mailOptions)
           //return new Response(JSON.stringify({ message: "送信成功" }), { status: 200 })
         } catch (error) {
-          console.log(error);
+          console.log('送信失敗', error);
           //return new Response(JSON.stringify({ message: "送信失敗" }), { status: 500 })
         }
 
     } catch (error) {
       // If a database error occurs, return a more specific error.
-      console.log('error', error)
+      console.log('Database error', error)
       return {
         message: 'Database Error: Failed to Create Reception.',
       };
     }
   
     // Revalidate the cache for the receptions page and redirect the user.
-    console.log('error', error)
     revalidatePath(`/dashboard/receptions/${tourn_id_num}/list`);
     redirect(`/dashboard/receptions/${tourn_id_num}/list`);
   }
@@ -146,9 +152,10 @@ export async function createReception(prevState: State, formData: FormData) {
       tourn_id: formData.get('tourn_id'),
     });
    
-    console.log('update quary', (typeof clubId), categoryId, name, age, email, user_id);
+//    console.log('update quary', (typeof clubId), categoryId, name, age, email, user_id);
   
-    const date = new Date().toISOString().split('T')[0];
+    const date = new Date().toLocaleString("ja");
+
     const tourn_id_num = Number(tourn_id);
    
     try {
@@ -158,7 +165,7 @@ export async function createReception(prevState: State, formData: FormData) {
           WHERE id = ${id}
         `;
     } catch (error) {
-      console.log('error', error)
+      console.log('Database error', error)
       return { message: 'Database Error: Failed to Update Reception.' };
     }
    
@@ -174,7 +181,7 @@ export async function createReception(prevState: State, formData: FormData) {
       revalidatePath('/dashboard');
       return { message: 'Deleted Reception.' };
     } catch (error) {
-      console.log('error', error)
+      console.log('Database error', error)
       return { message: 'Database Error: Failed to Delete Reception.' };
     }
   }
@@ -232,7 +239,7 @@ export async function createReception(prevState: State, formData: FormData) {
           `;
         } catch (error) {
           // If a database error occurs, return a more specific error.
-          console.log('error', error)
+          console.log('Database error', error)
           return 'ユーザー登録ができませんでした'          
         }
       }

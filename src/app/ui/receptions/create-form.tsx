@@ -13,7 +13,6 @@ import { createReception, State } from '@/app/lib/actions';
 import { useActionState } from 'react';
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation";
-//import { auth } from '@/auth';
 
 export default function Form(
   { clubs, categorys, tourn_id }
@@ -24,8 +23,6 @@ export default function Form(
   const [state, formAction] = useActionState(createReception, initialState);
 
   const user_id = session?.user?.id || ''
-
-//  console.log('createReception', createReception)
 
   return (
     <form action={formAction}>

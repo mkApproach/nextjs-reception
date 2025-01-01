@@ -17,10 +17,10 @@ export const formatDateToLocal = (
   const date = tergetdate.getDate();
   const day = tergetdate.getDay();
   const week = ["日", "月", "火", "水", "木", "金", "土"][day];
+  const hh = tergetdate.getHours();
+  const mm = tergetdate.getMinutes();
 
-//  console.log(tergetdate)
-
-  return `${year}年${month}月${date}日  (${week})`
+  return `${year}年${month}月${date}日  (${week}) ${hh}時${mm}分 `
 
 };
 

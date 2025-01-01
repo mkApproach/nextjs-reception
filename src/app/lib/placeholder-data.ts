@@ -97,7 +97,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 1,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '中嶋　美行 2024',
@@ -107,7 +106,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 1,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '井本　千陽 2024',
@@ -117,7 +115,6 @@ const receptions = [
     category_id: 2,
     tourn_id: 1,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '石井　杏奈 2024',
@@ -127,7 +124,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 1,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '綾瀬　はるか 2024',
@@ -137,7 +133,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 1,
     user_id: users[1].id,
-    date: '2024-11-25',
   },
   {
     name: '清原　果耶 2024',
@@ -147,7 +142,6 @@ const receptions = [
     category_id: 2,
     tourn_id: 1,
     user_id: users[1].id,
-    date: '2024-11-25',
   },
 
   {
@@ -158,7 +152,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 2,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '中嶋　美行',
@@ -168,7 +161,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 2,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '井本　千陽',
@@ -178,7 +170,6 @@ const receptions = [
     category_id: 2,
     tourn_id: 2,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '石井　杏奈',
@@ -188,7 +179,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 2,
     user_id: users[0].id,
-    date: '2024-11-25',
   },
   {
     name: '綾瀬　はるか',
@@ -198,7 +188,6 @@ const receptions = [
     category_id: 1,
     tourn_id: 2,
     user_id: users[1].id,
-    date: '2024-11-25',
   },
   {
     name: '清原　果耶',
@@ -208,7 +197,6 @@ const receptions = [
     category_id: 2,
     tourn_id: 2,
     user_id: users[1].id,
-    date: '2024-11-25',
   },
 ]
 

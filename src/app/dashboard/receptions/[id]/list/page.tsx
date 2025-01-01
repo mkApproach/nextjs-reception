@@ -8,9 +8,6 @@ import { Suspense } from 'react';
 import { fetchReceptionsPages, fetchTournamentById } from '@/app/lib/data';
 import { Metadata } from 'next';
 import { auth } from '@/auth';
-//import { sql } from '@vercel/postgres';
-//import type { Tournament } from '@/app/lib/definitions';
-
 
 export const metadata: Metadata = {
   title: {

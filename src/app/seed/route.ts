@@ -98,16 +98,20 @@ async function seedReceptions() {
        category_id integer NOT NULL,
        tourn_id integer NOT NULL,
        user_id TEXT NOT NULL,
-       date DATE NOT NULL,
+       date timestamp default 'now',
        PRIMARY KEY (id)
      );
   `;
+
+  const date = new Date().toLocaleString("ja");
+
+//  console.log('date', date)
 
   const insertedReceptions = await Promise.all(
     receptions.map(
       (reception) => client.sql`
         INSERT INTO receptions (name, age, email, club_id, category_id, tourn_id, user_id, date)
-        VALUES (${reception.name},${reception.age},${reception.email},${reception.club_id},${reception.category_id},${reception.tourn_id},${reception.user_id},${reception.date})
+        VALUES (${reception.name},${reception.age},${reception.email},${reception.club_id},${reception.category_id},${reception.tourn_id},${reception.user_id},${date})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),
@@ -151,16 +155,18 @@ async function seedTournaments() {
       tournament_name VARCHAR(255) NOT NULL,
       venue_id integer NOT NULL,
       club_id integer NOT NULL,
-      date DATE NOT NULL,
+      date timestamp default 'now',
       PRIMARY KEY (id)
     );
   `;
+
+  const date = new Date().toLocaleString("ja");
 
   const insertedTournaments = await Promise.all(
     tournaments.map(
       (tournament) => client.sql`
         INSERT INTO tournaments (tournament_name, venue_id, club_id, date)
-        VALUES (${tournament.tournament_name}, ${tournament.venue_id},${tournament.club_id},${tournament.date})
+        VALUES (${tournament.tournament_name}, ${tournament.venue_id},${tournament.club_id},${date})
         ON CONFLICT (id) DO NOTHING;
       `,
     ),

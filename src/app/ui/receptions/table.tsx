@@ -15,13 +15,8 @@ export default async function ReceptionsTable({
   user_id: string;
   tourn_id: number;
 }) {
-//  const user_id = '410544b2-4001-4271-9855-fec4b6a6442a'
 
   const receptions = await fetchFilteredReceptions(query, currentPage, user_id, tourn_id);
-
-//  console.log('ReceptionsTable query', query, tourn_id)
-
-//  console.log('Table receptions', receptions)
 
   return (
     <div className="mt-6 flow-root">
