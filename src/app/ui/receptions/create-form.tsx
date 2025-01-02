@@ -177,7 +177,7 @@ export default function Form(
         <div className="mb-4">
           <div>
             <div>
-              <input //type="hidden"
+              <input type="hidden"
                 id="user_id"
                 name="user_id"
                 defaultValue={user_id}
@@ -191,7 +191,7 @@ export default function Form(
         <div className="mb-4">
           <div>
             <div>
-              <input //type="hidden"
+              <input type="hidden"
                 id="tourn_id"
                 name="tourn_id"
                 defaultValue={tourn_id}
