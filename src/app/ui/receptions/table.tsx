@@ -28,7 +28,7 @@ export default async function ReceptionsTable({
                 key={reception.id}
                 className="mb-1 w-full rounded-md bg-white p-2"
               >
-                <div className="flex items-center justify-between border-b pb-2">
+                <div className="flex items-center justify-between border-b pb-1">
                   <div>
                     <div className="mb-1 flex items-center">
 
@@ -37,7 +37,7 @@ export default async function ReceptionsTable({
                     <p className="text-sm text-gray-500">{reception.category_name}</p>
                   </div>
                </div>
-                <div className="flex w-full items-center justify-between pt-2">
+                <div className="flex w-full items-center justify-between pt-1">
                   <div>
                     <p className="text-xl font-medium">
                       { reception.name }
