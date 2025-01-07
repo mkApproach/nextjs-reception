@@ -148,7 +148,7 @@ export default function EditReceptionForm({
         <div className="mb-4">
           <div>
             <div>
-              <input //type="hidden"
+              <input type="hidden"
                 id="user_id"
                 name="user_id"
                 defaultValue= {reception.user_id}
@@ -162,7 +162,7 @@ export default function EditReceptionForm({
         <div className="mb-4">
           <div>
             <div>
-              <input //type="hidden"
+              <input type="hidden"
                 id="tourn_id"
                 name="tourn_id"
                 defaultValue={reception.tourn_id}
