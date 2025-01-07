@@ -119,8 +119,18 @@ export async function createReception(prevState: State, formData: FormData) {
         const mailOptions = {
           from: process.env.EMAIL_SEND_USER,
           to: `${user_email}`,
-          subject: `試合の申し込み ${user_name} 様`,
-          text: `送信者：日高町卓球協会 ${process.env.EMAIL_RECEIVE_USER}\n\n${name}様分\n\n内容:受け付けました。`,
+          subject: `試合の申し込み ${user_name}　 様`,
+//          text: `${'受け付けました'} Send from ${process.env.EMAIL_SEND_USER}`,
+          html: `
+          <p>【選手名】</p>
+          <p>${name}　様</p>
+          <p>【メッセージ内容】</p>
+          <p>${`申し込みを受け付けました。`}</p>
+          <p>${`　　　　日高町卓球協会`}</p>
+          <p>【メールアドレス】</p>
+          <p>${process.env.EMAIL_SEND_USER}</p>
+          `,
+          //text: `送信者：日高町卓球協会\n\n${name}様分\n\n内容:申し込みを受け付けました。`,
         };
       
         try {
