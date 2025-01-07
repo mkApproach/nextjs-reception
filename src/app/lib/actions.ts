@@ -120,17 +120,15 @@ export async function createReception(prevState: State, formData: FormData) {
           from: process.env.EMAIL_SEND_USER,
           to: `${user_email}`,
           subject: `試合の申し込み ${user_name}　 様`,
-//          text: `${'受け付けました'} Send from ${process.env.EMAIL_SEND_USER}`,
           html: `
           <p>【選手名】</p>
-          <p>${name}　様</p>
+          <p>${name}　様分</p>
           <p>【メッセージ内容】</p>
           <p>${`申し込みを受け付けました。`}</p>
           <p>${`　　　　日高町卓球協会`}</p>
           <p>【メールアドレス】</p>
           <p>${process.env.EMAIL_SEND_USER}</p>
           `,
-          //text: `送信者：日高町卓球協会\n\n${name}様分\n\n内容:申し込みを受け付けました。`,
         };
       
         try {
@@ -138,6 +136,9 @@ export async function createReception(prevState: State, formData: FormData) {
           //return new Response(JSON.stringify({ message: "送信成功" }), { status: 200 })
         } catch (error) {
           console.log('送信失敗', error);
+          return {
+            message: 'sendMail Error: Failed to sendMail Reception.',
+          }
           //return new Response(JSON.stringify({ message: "送信失敗" }), { status: 500 })
         }
 
@@ -177,6 +178,46 @@ export async function createReception(prevState: State, formData: FormData) {
           SET name = ${name}, age = ${age}, email = ${email}, club_Id = ${clubId}, category_Id = ${categoryId}, date = ${date}
           WHERE id = ${id}
         `;
+
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL_SEND_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        });
+        
+        const session = await auth();
+        const user_email = session?.user?.email || '';
+        const user_name = session?.user?.name || '';
+
+        console.log('user_email', user_email)
+      
+        const mailOptions = {
+          from: process.env.EMAIL_SEND_USER,
+          to: `${user_email}`,
+          subject: `試合の申し込み ${user_name}　 様`,
+          html: `
+          <p>【選手名】</p>
+          <p>${name}　様分</p>
+          <p>【メッセージ内容】</p>
+          <p>${`申し込の変更を受け付けました。`}</p>
+          <p>${`　　　　日高町卓球協会`}</p>
+          <p>【メールアドレス】</p>
+          <p>${process.env.EMAIL_SEND_USER}</p>
+          `,
+        };
+      
+        try {
+          await transporter.sendMail(mailOptions)
+          //return new Response(JSON.stringify({ message: "送信成功" }), { status: 200 })
+        } catch (error) {
+          console.log('送信失敗', error);
+          return {
+            message: 'sendMail Error: Failed to sendMail Reception.',
+          }
+          //return new Response(JSON.stringify({ message: "送信失敗" }), { status: 500 })
+        }
     } catch (error) {
       console.log('Database error', error)
       return { message: 'Database Error: Failed to Update Reception.' };
